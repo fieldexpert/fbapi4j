@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://ivyrep.jayasoft.org/ivy-doc.xsl"?>
+<ivy-module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd"
+	version="2.0">
+
+	<info organisation="com.fieldexpert" module="fbapi4j" />
+
+	<configurations defaultconfmapping="compile -> default; runtime -> default; test -> default">
+		<conf name="compile" />
+		<conf name="runtime" />
+		<conf name="test" />
+	</configurations>
+
+	<dependencies>
+		<!-- Compile -->
+		<dependency org="com.google.code" name="jarjar" rev="1.0" />
+
+		<!--  Runtime -->
+		<dependency org="eu.medsea.mimeutil" name="mime-util" rev="2.1" conf="runtime" transitive="false" />
+		<dependency org="org.slf4j" name="slf4j-nop" rev="1.5.10" transitive="false" conf="runtime" />
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.5.10" transitive="false" conf="runtime" />
+
+		<!-- Testing -->
+		<dependency org="junit" name="junit" rev="4.7" conf="test" transitive="false" />
+
+	</dependencies>
+
+</ivy-module>
