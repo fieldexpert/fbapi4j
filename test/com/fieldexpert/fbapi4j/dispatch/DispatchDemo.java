@@ -6,8 +6,8 @@ import com.fieldexpert.fbapi4j.common.Util;
 public class DispatchDemo {
 
 	public static void main(String[] args) throws Exception {
-//		String email = args[0];
-	//	String password = args[1];
+		//	String email = args[0];
+		//	String password = args[1];
 
 		Util util = new Util();
 
@@ -24,7 +24,7 @@ public class DispatchDemo {
 		//Map<String, String> response;
 
 		resp = dispatch.invoke(new Request(util.map("foo", "bar")).attach("foo.txt", "text/html", "<htm>glory</html>"));
-		
+
 		System.out.println(util.data(resp.getDocument(), "file"));
 	}
 }

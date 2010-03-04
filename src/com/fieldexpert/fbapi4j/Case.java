@@ -72,7 +72,7 @@ public class Case {
 		return description;
 	}
 
-	List<Attachment> getAttachments() {
+	public List<Attachment> getAttachments() {
 		return Collections.unmodifiableList(this.attachments);
 	}
 

@@ -57,7 +57,7 @@ public final class Dispatch {
 		}
 
 		InputStream resp = null;
-		if (request.getAttachments().size() > 0) {
+		if (request != null && request.getAttachments().size() > 0) {
 			resp = Http.req(method, url, parameters, request.getAttachments());
 		} else {
 			resp = Http.req(method, url, parameters);

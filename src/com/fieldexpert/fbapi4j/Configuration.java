@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.Properties;
 
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
+import com.fieldexpert.fbapi4j.session.Session;
+import com.fieldexpert.fbapi4j.session.SessionFactory;
 
 public final class Configuration {
 
@@ -24,6 +26,10 @@ public final class Configuration {
 
 	public Configuration(Configuration configuration) {
 		this.properties = configuration.getProperties();
+	}
+
+	public Session getSession() {
+		return new SessionFactory().createSession(this);
 	}
 
 	public Dispatch buildDispatch() {
