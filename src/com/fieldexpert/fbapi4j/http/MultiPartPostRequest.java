@@ -17,7 +17,7 @@ class MultiPartPostRequest extends HttpRequest {
 	/**
 	 * See: http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html
 	 */
-	private static String createBoundary() {
+	private String createBoundary() {
 		return "-----------------------------" + Long.toString(System.currentTimeMillis());
 	}
 
@@ -43,9 +43,11 @@ class MultiPartPostRequest extends HttpRequest {
 			mout.write(param.getKey(), param.getValue());
 		}
 
+		int files = 0;
 		for (Attachment attachment : attachments) {
-			mout.write(FogBugz.FILE, attachment.getFilename(), attachment.getType(), attachment.getContent());
+			mout.write(FogBugz.FILE + (++files), attachment.getFilename(), attachment.getType(), attachment.getContent());	
 		}
+		mout.write(FogBugz.N_FILE_COUNT, files);
 
 		mout.writeEnd();
 	}
