@@ -61,6 +61,8 @@ abstract class HttpRequest {
 		return method;
 	}
 
+	abstract boolean requiresWrite();
+
 	abstract String getContentType();
 
 	abstract void write(OutputStream out) throws IOException;
@@ -75,9 +77,11 @@ abstract class HttpRequest {
 
 		conn.connect();
 
-		OutputStream out = conn.getOutputStream();
-		write(out);
-		out.close();
+		if (requiresWrite()) {
+			OutputStream out = conn.getOutputStream();
+			write(out);
+			out.close();
+		}
 
 		return conn.getInputStream();
 	}

@@ -35,4 +35,9 @@ class GetRequest extends HttpRequest {
 	void write(OutputStream out) {
 		// no-op
 	}
+
+	@Override
+	boolean requiresWrite() {
+		return false;
+	}
 }

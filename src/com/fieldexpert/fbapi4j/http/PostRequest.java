@@ -29,4 +29,9 @@ class PostRequest extends HttpRequest {
 		data.writeBytes(buildQueryString(parameters));
 		data.flush();
 	}
+
+	@Override
+	boolean requiresWrite() {
+		return true;
+	}
 }

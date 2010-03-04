@@ -51,4 +51,9 @@ class MultiPartPostRequest extends HttpRequest {
 
 		mout.writeEnd();
 	}
+
+	@Override
+	boolean requiresWrite() {
+		return true;
+	}
 }
