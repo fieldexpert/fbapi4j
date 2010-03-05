@@ -1,6 +1,5 @@
 package com.fieldexpert.fbapi4j.http.server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,8 +25,7 @@ class ParameterParser {
 			if (contentType.startsWith("multipart/form-data")) {
 				return parseMultiForm(exchange);
 			} else {
-				BufferedReader br = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
-				return parseQuery(br.readLine());
+				return parseQuery(string(exchange.getRequestBody()));
 			}
 		} else {
 			throw new UnsupportedOperationException();
