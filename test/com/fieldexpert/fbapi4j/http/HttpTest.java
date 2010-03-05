@@ -3,8 +3,10 @@ package com.fieldexpert.fbapi4j.http;
 import static com.fieldexpert.fbapi4j.http.server.IOUtils.string;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -59,6 +61,20 @@ public class HttpTest {
 		params.put("File1", "This is my test file.");
 
 		assertEquals(params, returnedParams);
+	}
+
+	@Test
+	public void attachments() throws IOException {
+		List<Attachment> attachments = asList(new Attachment("foo.txt", "text/plain", "This is my test file."), new Attachment(new File("test/fogbugz.xml")));
+		InputStream is = Http.post(url, params, attachments);
+
+		Map<String, String> returnedParams = params(string(is));
+
+		params.put("nFileCount", "2");
+		params.put("File1", "This is my test file.");
+
+		assertTrue(returnedParams.containsKey("File1"));
+		assertTrue(returnedParams.containsKey("File2"));
 	}
 
 	private Map<String, String> params(String response) {
