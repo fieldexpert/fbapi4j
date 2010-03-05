@@ -1,9 +1,8 @@
 package com.fieldexpert.fbapi4j.http.server;
 
+import static com.fieldexpert.fbapi4j.http.server.IOUtils.string;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -35,6 +34,8 @@ class ParameterParser {
 	/**
 	 * I should be shot for writing this. It should be noted that this should
 	 * never be used for anything important.
+	 * 
+	 * Only works for incredibly simple files...(it's a test)
 	 */
 	private Map<String, String> parseMultiForm(HttpExchange exchange) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
@@ -48,30 +49,16 @@ class ParameterParser {
 				if (lines[2].contains("Content-Type")) {
 					StringBuilder sb = new StringBuilder();
 					for (int i = 4; i < lines.length - 1; i++) {
-						sb.append(lines[i].replace("\r", ""));
+						String line = lines[i];
+						sb.append(i == (lines.length - 1) ? line.replace("\r", "") : line);
 					}
 					params.put(name, sb.toString());
 				} else {
-					params.put(name, lines[3].replaceAll("\r", "")); // Only works for incredibly simple params
+					params.put(name, lines[3].replaceAll("\r", ""));
 				}
 			}
 		}
 		return params;
-	}
-
-	private String string(InputStream is) throws IOException {
-		final char[] buffer = new char[0x10000];
-		StringBuilder out = new StringBuilder();
-		Reader in = new InputStreamReader(is, "UTF-8");
-		int read;
-		do {
-			read = in.read(buffer, 0, buffer.length);
-			if (read > 0) {
-				out.append(buffer, 0, read);
-			}
-		} while (read >= 0);
-
-		return out.toString();
 	}
 
 	private Map<String, String> parseQuery(String query) throws UnsupportedEncodingException {
@@ -80,8 +67,8 @@ class ParameterParser {
 			String[] pairs = query.split("&");
 			for (String pair : pairs) {
 				String[] param = pair.split("=");
-				String key = URLDecoder.decode(param[0], "utf-8");
-				String value = URLDecoder.decode(param[1], "utf-8");
+				String key = URLDecoder.decode(param[0], "UTF-8");
+				String value = URLDecoder.decode(param[1], "UTF-8");
 				params.put(key, value);
 			}
 		}

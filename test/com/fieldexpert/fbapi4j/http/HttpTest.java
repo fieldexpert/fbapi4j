@@ -1,5 +1,6 @@
 package com.fieldexpert.fbapi4j.http;
 
+import static com.fieldexpert.fbapi4j.http.server.IOUtils.string;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 
@@ -48,12 +49,11 @@ public class HttpTest {
 	}
 
 	@Test
-	public void attachments() throws IOException {
+	public void attachment() throws IOException {
 		List<Attachment> attachments = asList(new Attachment("foo.txt", "text/plain", "This is my test file."));
 		InputStream is = Http.post(url, params, attachments);
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		Map<String, String> returnedParams = params(br.readLine());
+		Map<String, String> returnedParams = params(string(is));
 
 		params.put("nFileCount", "1");
 		params.put("File1", "This is my test file.");
@@ -65,7 +65,7 @@ public class HttpTest {
 		Map<String, String> result = new HashMap<String, String>();
 		String[] params = response.replaceAll("\\{|\\}", "").split(",");
 		for (String param : params) {
-			String[] tuple = param.split("=");
+			String[] tuple = param.split("="); // Obviously doesn't work if the file contains equal signs.
 			result.put(tuple[0].trim(), tuple[1].trim());
 		}
 		return result;
