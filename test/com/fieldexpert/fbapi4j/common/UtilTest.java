@@ -37,7 +37,7 @@ public class UtilTest {
 
 	@Test
 	public void children() throws Exception {
-		Document doc = util.document(new FileInputStream("test/fogbugz.xml"));
+		Document doc = util.document(new FileInputStream("test/fbapi4j.xml"));
 		Map<String, String> map = util.children(doc);
 
 		assertNotNull(map);
@@ -47,9 +47,9 @@ public class UtilTest {
 
 	@Test
 	public void document() throws Exception {
-		Document doc = util.document(new FileInputStream("test/fogbugz.xml"));
+		Document doc = util.document(new FileInputStream("test/fbapi4j.xml"));
 		assertNotNull(doc);
-		assertEquals("fogbugz", doc.getDocumentElement().getNodeName());
+		assertEquals("fbapi4j", doc.getDocumentElement().getNodeName());
 	}
 
 	@Before

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fogbugz>
+<fbapi4j>
 	<error code="17">Blue Smoke!</error>
-</fogbugz>
+</fbapi4j>

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.fieldexpert.fbapi4j.FogBugz;
+import com.fieldexpert.fbapi4j.Fbapi4j;
 import com.fieldexpert.fbapi4j.common.Attachment;
 
 class MultiPartPostRequest extends HttpRequest {
@@ -45,9 +45,9 @@ class MultiPartPostRequest extends HttpRequest {
 
 		int files = 0;
 		for (Attachment attachment : attachments) {
-			mout.write(FogBugz.FILE + (++files), attachment.getFilename(), attachment.getType(), attachment.getContent());	
+			mout.write(Fbapi4j.FILE + (++files), attachment.getFilename(), attachment.getType(), attachment.getContent());	
 		}
-		mout.write(FogBugz.N_FILE_COUNT, files);
+		mout.write(Fbapi4j.N_FILE_COUNT, files);
 
 		mout.writeEnd();
 	}

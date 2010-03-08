@@ -1,8 +1,8 @@
 package com.fieldexpert.fbapi4j;
 
-public final class FogBugz {
+public final class Fbapi4j {
 
-	private FogBugz() {
+	private Fbapi4j() {
 		// cannot construct
 	}
 

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.fieldexpert.fbapi4j.FogBugz;
+import com.fieldexpert.fbapi4j.Fbapi4j;
 import com.fieldexpert.fbapi4j.common.Assert;
 import com.fieldexpert.fbapi4j.common.Attachment;
 
@@ -88,7 +88,7 @@ public final class Request implements Map<String, Object> {
 	}
 
 	public Request setCommand(String command) {
-		parameters.put(FogBugz.CMD, command);
+		parameters.put(Fbapi4j.CMD, command);
 		return this;
 	}
 

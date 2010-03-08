@@ -1,7 +1,7 @@
 package com.fieldexpert.fbapi4j.session;
 
 import com.fieldexpert.fbapi4j.Case;
-import com.fieldexpert.fbapi4j.FogbugzException;
+import com.fieldexpert.fbapi4j.Fbapi4jException;
 
 class DisconnectedSession implements Session {
 
@@ -10,7 +10,7 @@ class DisconnectedSession implements Session {
 	}
 
 	public void close() {
-		throw new FogbugzException("The session has already been closed.");
+		throw new Fbapi4jException("The session has already been closed.");
 	}
 
 	public void close(Case bug) {

@@ -5,7 +5,7 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 import com.fieldexpert.fbapi4j.Case;
-import com.fieldexpert.fbapi4j.FogBugz;
+import com.fieldexpert.fbapi4j.Fbapi4j;
 import com.fieldexpert.fbapi4j.common.Assert;
 import com.fieldexpert.fbapi4j.common.Attachment;
 import com.fieldexpert.fbapi4j.common.Util;
@@ -29,7 +29,7 @@ class ConnectedSession implements Session {
 
 	private void api() {
 		if (url == null) {
-			Response response = dispatch.invoke(Http.GET, util.url(dispatch.getEndpoint(), FogBugz.API_XML));
+			Response response = dispatch.invoke(Http.GET, util.url(dispatch.getEndpoint(), Fbapi4j.API_XML));
 			Document doc = response.getDocument();
 			url = util.children(doc).get("url");
 			dispatch.setProperty("path", url);
@@ -42,7 +42,7 @@ class ConnectedSession implements Session {
 
 	public void close() {
 		Assert.notNull(token);
-		dispatch.invoke(new Request(FogBugz.LOGOFF, util.map(FogBugz.TOKEN, token)));
+		dispatch.invoke(new Request(Fbapi4j.LOGOFF, util.map(Fbapi4j.TOKEN, token)));
 		token = null;
 	}
 
@@ -61,13 +61,13 @@ class ConnectedSession implements Session {
 		List<Attachment> attachments = bug.getAttachments();
 
 		if (attachments == null) {
-			dispatch.invoke(new Request(FogBugz.NEW, util.map(FogBugz.TOKEN, token, //
-					FogBugz.S_PROJECT, project, FogBugz.S_AREA, area, FogBugz.S_SCOUT_DESCRIPTION, title, //
-					FogBugz.S_TITLE, title, FogBugz.S_EVENT, desc)));
+			dispatch.invoke(new Request(Fbapi4j.NEW, util.map(Fbapi4j.TOKEN, token, //
+					Fbapi4j.S_PROJECT, project, Fbapi4j.S_AREA, area, Fbapi4j.S_SCOUT_DESCRIPTION, title, //
+					Fbapi4j.S_TITLE, title, Fbapi4j.S_EVENT, desc)));
 		} else {
-			dispatch.invoke(new Request(FogBugz.NEW, util.map(FogBugz.TOKEN, token, //
-					FogBugz.S_PROJECT, project, FogBugz.S_AREA, area, FogBugz.S_SCOUT_DESCRIPTION, title, //
-					FogBugz.S_TITLE, title, FogBugz.S_EVENT, desc)).attach(attachments));
+			dispatch.invoke(new Request(Fbapi4j.NEW, util.map(Fbapi4j.TOKEN, token, //
+					Fbapi4j.S_PROJECT, project, Fbapi4j.S_AREA, area, Fbapi4j.S_SCOUT_DESCRIPTION, title, //
+					Fbapi4j.S_TITLE, title, Fbapi4j.S_EVENT, desc)).attach(attachments));
 		}
 	}
 
@@ -78,7 +78,7 @@ class ConnectedSession implements Session {
 
 	void logon() {
 		api();
-		Response resp = dispatch.invoke(new Request(FogBugz.LOGON, util.map(FogBugz.EMAIL, dispatch.getEmail(), FogBugz.PASSWORD, dispatch.getPassword())));
+		Response resp = dispatch.invoke(new Request(Fbapi4j.LOGON, util.map(Fbapi4j.EMAIL, dispatch.getEmail(), Fbapi4j.PASSWORD, dispatch.getPassword())));
 		Document doc = resp.getDocument();
 		token = util.children(doc).get("token");
 	}
