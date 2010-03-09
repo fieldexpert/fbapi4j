@@ -10,7 +10,7 @@ import com.fieldexpert.fbapi4j.common.Attachment;
 public class Event implements Comparable<Event> {
 	private final String id;
 	private final Case bug;
-	private final String verb; //TODO better word
+	private final String verb;
 	private final String description;
 	private final Date date;
 	private final String createdBy;
