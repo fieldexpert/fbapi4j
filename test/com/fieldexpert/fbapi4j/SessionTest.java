@@ -1,4 +1,4 @@
-package com.fieldexpert.fbapi4j.session;
+package com.fieldexpert.fbapi4j;
 
 import org.junit.Test;
 
