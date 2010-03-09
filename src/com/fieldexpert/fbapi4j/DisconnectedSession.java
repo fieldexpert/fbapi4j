@@ -1,7 +1,4 @@
-package com.fieldexpert.fbapi4j.session;
-
-import com.fieldexpert.fbapi4j.Case;
-import com.fieldexpert.fbapi4j.Fbapi4jException;
+package com.fieldexpert.fbapi4j;
 
 class DisconnectedSession implements Session {
 

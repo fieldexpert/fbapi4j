@@ -1,10 +1,8 @@
-package com.fieldexpert.fbapi4j.session;
+package com.fieldexpert.fbapi4j;
 
 import static com.fieldexpert.fbapi4j.common.StringUtil.collectionToCommaDelimitedString;
 import static java.util.Arrays.asList;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,11 +11,6 @@ import java.util.Set;
 
 import org.w3c.dom.Document;
 
-import com.fieldexpert.fbapi4j.AllowedOperation;
-import com.fieldexpert.fbapi4j.Case;
-import com.fieldexpert.fbapi4j.CaseBuilder;
-import com.fieldexpert.fbapi4j.Fbapi4j;
-import com.fieldexpert.fbapi4j.Fbapi4jException;
 import com.fieldexpert.fbapi4j.common.Assert;
 import com.fieldexpert.fbapi4j.common.Attachment;
 import com.fieldexpert.fbapi4j.common.StringUtil;
@@ -69,15 +62,8 @@ class ConnectedSession implements Session {
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
-	@SuppressWarnings("unchecked")
 	private Map<String, Object> events(Case c) {
-		try {
-			Field events = c.getClass().getDeclaredField("_events");
-			events.setAccessible(true);
-			return new HashMap<String, Object>((Map<String, Object>) events.get(c));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return new HashMap<String, Object>(c.getFields());
 	}
 
 	public void create(Case bug) {
@@ -96,23 +82,13 @@ class ConnectedSession implements Session {
 	}
 
 	private void updateCase(Case c, Map<String, String> data) {
-		try {
-			Method setNumber = c.getClass().getDeclaredMethod("setNumber", String.class);
-			setNumber.setAccessible(true);
-			setNumber.invoke(c, data.get(Fbapi4j.IX_BUG));
-
-			List<String> allowed = StringUtil.commaDelimitedStringToSet(data.get(Fbapi4j.OPERATIONS));
-			Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
-
-			for (String op : allowed) {
-				operations.add(AllowedOperation.valueOf(op.toUpperCase()));
-			}
-			Field ops = c.getClass().getDeclaredField("allowedOperations");
-			ops.setAccessible(true);
-			ops.set(c, operations);
-		} catch (Exception e) {
-			e.printStackTrace();
+		c.setNumber(data.get(Fbapi4j.IX_BUG));
+		List<String> allowed = StringUtil.commaDelimitedStringToSet(data.get(Fbapi4j.OPERATIONS));
+		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
+		for (String op : allowed) {
+			operations.add(AllowedOperation.valueOf(op.toUpperCase()));
 		}
+		c.setAllowedOperations(operations);
 	}
 
 	public void edit(Case bug) {

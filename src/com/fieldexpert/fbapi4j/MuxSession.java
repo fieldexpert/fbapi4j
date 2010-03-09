@@ -1,6 +1,5 @@
-package com.fieldexpert.fbapi4j.session;
+package com.fieldexpert.fbapi4j;
 
-import com.fieldexpert.fbapi4j.Case;
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 
 class MuxSession implements Session {

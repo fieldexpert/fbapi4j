@@ -1,10 +1,12 @@
 package com.fieldexpert.fbapi4j.session;
 
+import java.io.File;
 import java.util.Date;
 
 import com.fieldexpert.fbapi4j.Case;
 import com.fieldexpert.fbapi4j.Configuration;
 import com.fieldexpert.fbapi4j.Priority;
+import com.fieldexpert.fbapi4j.Session;
 
 public class SessionDemo {
 
@@ -19,7 +21,6 @@ public class SessionDemo {
 
 		Session session = conf.getSession();
 
-		/*
 		Case bug1 = new Case("Internal Field Expert", "Misc", "Test Case Title", "Case Event 20").attach("build.xml", "text/xml", "My Custom Build file!").attach(new File("test/fbapi4j.xml"));
 		session.scout(bug1);
 		
@@ -27,7 +28,6 @@ public class SessionDemo {
 		session.create(bug2);
 		session.resolve(bug2);
 		session.close(bug2);
-		*/
 
 		Case c = session.getCase(1190);
 		//session.reopen(c);

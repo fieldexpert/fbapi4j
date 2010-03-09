@@ -12,18 +12,18 @@ import org.w3c.dom.NodeList;
 import com.fieldexpert.fbapi4j.common.DateFormatUtil;
 import com.fieldexpert.fbapi4j.common.Util;
 
-public class CaseBuilder {
+class CaseBuilder {
 	private Util util;
 	private URL url;
 	private String token;
 
-	public CaseBuilder(Util util, URL url, String token) {
+	CaseBuilder(Util util, URL url, String token) {
 		this.util = util;
 		this.url = url;
 		this.token = token;
 	}
 
-	public Case build(Document doc) {
+	Case build(Document doc) {
 		Map<String, String> caseMap = util.data(doc, "case").get(0);
 		Case c = new Case(caseMap.get(Fbapi4j.IX_BUG), caseMap.get(Fbapi4j.S_PROJECT), caseMap.get(Fbapi4j.S_AREA), //
 				caseMap.get(Fbapi4j.S_TITLE), caseMap.get(Fbapi4j.S_SCOUT_DESCRIPTION));

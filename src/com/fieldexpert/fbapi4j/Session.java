@@ -1,6 +1,4 @@
-package com.fieldexpert.fbapi4j.session;
-
-import com.fieldexpert.fbapi4j.Case;
+package com.fieldexpert.fbapi4j;
 
 public interface Session {
 
