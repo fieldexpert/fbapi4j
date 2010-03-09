@@ -14,10 +14,14 @@ public interface Session {
 
 	void edit(Case bug);
 
+	Case getCase(int number);
+
 	void reactivate(Case bug);
 
 	void reopen(Case bug);
 
 	void resolve(Case bug);
+
+	void scout(Case bug);
 
 }

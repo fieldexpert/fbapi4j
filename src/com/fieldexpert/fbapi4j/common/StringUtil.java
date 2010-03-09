@@ -1,7 +1,9 @@
 package com.fieldexpert.fbapi4j.common;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class StringUtil {
 
@@ -23,4 +25,18 @@ public class StringUtil {
 	public static String collectionToCommaDelimitedString(Collection<?> col) {
 		return collectionToDelimitedString(col, ",");
 	}
+
+	public static List<String> commaDelimitedStringToSet(String str) {
+		if (str == null) {
+			return new ArrayList<String>(0);
+		}
+		List<String> result = new ArrayList<String>();
+
+		String[] pieces = str.split(",");
+		for (String piece : pieces) {
+			result.add(piece);
+		}
+		return result;
+	}
+
 }

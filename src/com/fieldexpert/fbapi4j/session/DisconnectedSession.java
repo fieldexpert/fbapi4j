@@ -37,4 +37,13 @@ class DisconnectedSession implements Session {
 		throw new IllegalStateException("No Session available.");
 	}
 
+	@Override
+	public Case getCase(int number) {
+		throw new IllegalStateException("No Session available.");
+	}
+
+	@Override
+	public void scout(Case bug) {
+		throw new IllegalStateException("No Session available.");
+	}
 }

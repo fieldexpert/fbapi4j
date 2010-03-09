@@ -69,4 +69,13 @@ class MuxSession implements Session {
 		state.resolve(bug);
 	}
 
+	public Case getCase(int number) {
+		connect();
+		return state.getCase(number);
+	}
+
+	public void scout(Case bug) {
+		connect();
+		state.scout(bug);
+	}
 }

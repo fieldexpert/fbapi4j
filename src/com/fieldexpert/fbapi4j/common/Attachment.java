@@ -38,6 +38,11 @@ public class Attachment {
 	private String type;
 	private InputStream content;
 
+	// not for you
+	protected Attachment(String name) {
+		this.filename = name;
+	}
+
 	public Attachment(String filename, String type, byte[] content) {
 		this(filename, type, new ByteArrayInputStream(content));
 	}

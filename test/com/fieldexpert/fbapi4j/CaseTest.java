@@ -13,7 +13,6 @@ public class CaseTest {
 		assertEquals("fbapi4j", bug.getProject());
 		assertEquals("Misc", bug.getArea());
 		assertEquals("Test Case Title", bug.getTitle());
-		assertEquals("Blue Smoke", bug.getDescription());
 	}
 
 }
