@@ -1,5 +1,8 @@
 package com.fieldexpert.fbapi4j;
 
+import java.io.Serializable;
+import java.util.List;
+
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 
 class MuxSession implements Session {
@@ -68,13 +71,18 @@ class MuxSession implements Session {
 		state.resolve(bug);
 	}
 
-	public Case getCase(int number) {
-		connect();
-		return state.getCase(number);
-	}
-
 	public void scout(Case bug) {
 		connect();
 		state.scout(bug);
+	}
+
+	public <T extends Entity> T get(Class<T> clazz, Serializable id) {
+		connect();
+		return state.get(clazz, id);
+	}
+
+	public <T extends Entity> List<T> findAll(Class<T> clazz) {
+		connect();
+		return state.findAll(clazz);
 	}
 }

@@ -26,6 +26,8 @@ public final class Fbapi4j {
 
 	public static final String EVENTS = "events";
 
+	public static final String LIST_PROJECTS = "listProjects";
+
 	public static final String EVN_DESC = "evtDescription";
 
 	public static final String F_SCOUT_STOP_REPORTING = "fScoutStopReporting"; // - set this to 1 if you don't want FogBugz to record any more of these types of cases

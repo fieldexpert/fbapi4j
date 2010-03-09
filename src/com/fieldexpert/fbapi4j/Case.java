@@ -18,7 +18,7 @@ import com.fieldexpert.fbapi4j.common.Assert;
 import com.fieldexpert.fbapi4j.common.Attachment;
 import com.fieldexpert.fbapi4j.common.DateFormatUtil;
 
-public class Case {
+public class Case extends Entity {
 	private List<Attachment> attachments;
 	private List<Event> events;
 	private Set<AllowedOperation> allowedOperations;

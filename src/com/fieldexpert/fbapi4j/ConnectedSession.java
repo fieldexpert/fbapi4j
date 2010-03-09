@@ -3,6 +3,8 @@ package com.fieldexpert.fbapi4j;
 import static com.fieldexpert.fbapi4j.common.StringUtil.collectionToCommaDelimitedString;
 import static java.util.Arrays.asList;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -98,12 +100,6 @@ class ConnectedSession implements Session {
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
-	public Case getCase(int number) {
-		String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
-		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, number, Fbapi4j.COLS, cols)));
-		return new CaseBuilder(util, dispatch.getEndpoint(), token).build(resp.getDocument());
-	}
-
 	private Response send(String command, Map<String, Object> parameters) {
 		return send(command, parameters, null);
 	}
@@ -156,4 +152,33 @@ class ConnectedSession implements Session {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public <T extends Entity> T get(Class<T> clazz, Serializable id) {
+		if (clazz.equals(Case.class)) {
+			String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
+			Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, cols)));
+			return (T) new CaseBuilder(util, dispatch.getEndpoint(), token).build(resp.getDocument());
+		} else if (clazz.equals(Project.class)) {
+			Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PROJECTS, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PROJECT, id)));
+			Map<String, String> project = util.data(resp.getDocument(), "project").get(0);
+			return (T) new Project(Long.parseLong(project.get(Fbapi4j.IX_PROJECT)), project.get(Fbapi4j.S_PROJECT));
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Entity> List<T> findAll(Class<T> clazz) {
+		if (clazz.equals(Project.class)) {
+			Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PROJECTS, util.map(Fbapi4j.TOKEN, token)));
+			List<Map<String, String>> list = util.data(resp.getDocument(), "project");
+			List<Project> projects = new ArrayList<Project>();
+			for (Map<String, String> map : list) {
+				projects.add(new Project(Long.parseLong(map.get(Fbapi4j.IX_PROJECT)), map.get(Fbapi4j.S_PROJECT)));
+			}
+			return (List<T>) projects;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
 }

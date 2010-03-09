@@ -1,5 +1,8 @@
 package com.fieldexpert.fbapi4j;
 
+import java.io.Serializable;
+import java.util.List;
+
 class DisconnectedSession implements Session {
 
 	public void assign(Case bug) {
@@ -34,13 +37,15 @@ class DisconnectedSession implements Session {
 		throw new IllegalStateException("No Session available.");
 	}
 
-	@Override
-	public Case getCase(int number) {
+	public void scout(Case bug) {
 		throw new IllegalStateException("No Session available.");
 	}
 
-	@Override
-	public void scout(Case bug) {
+	public <T extends Entity> T get(Class<T> clazz, Serializable id) {
+		throw new IllegalStateException("No Session available.");
+	}
+
+	public <T extends Entity> List<T> findAll(Class<T> clazz) {
 		throw new IllegalStateException("No Session available.");
 	}
 }

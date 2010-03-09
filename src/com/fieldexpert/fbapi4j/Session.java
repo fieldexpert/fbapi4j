@@ -1,5 +1,8 @@
 package com.fieldexpert.fbapi4j;
 
+import java.io.Serializable;
+import java.util.List;
+
 public interface Session {
 
 	void assign(Case bug);
@@ -12,7 +15,9 @@ public interface Session {
 
 	void edit(Case bug);
 
-	Case getCase(int number);
+	<T extends Entity> T get(Class<T> clazz, Serializable id);
+
+	<T extends Entity> List<T> findAll(Class<T> clazz);
 
 	void reactivate(Case bug);
 
