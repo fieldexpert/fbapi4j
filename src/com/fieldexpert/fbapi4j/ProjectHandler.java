@@ -25,12 +25,7 @@ class ProjectHandler implements Handler<Project> {
 	}
 
 	public void create(Project t) {
-		throw new UnsupportedOperationException();
-		/*
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put(Fbapi4j.S_PROJECT, t.getName());
-		Response resp = dispatch.invoke(new Request(Fbapi4j.NEW_PROJECT, params));
-		*/
+		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
 	}
 
 	public List<Project> findAll() {
@@ -44,8 +39,11 @@ class ProjectHandler implements Handler<Project> {
 	}
 
 	public Project findById(Integer id) {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PROJECTS, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PROJECT, id)));
-		Map<String, String> project = util.data(resp.getDocument(), "project").get(0);
-		return new Project(Integer.parseInt(project.get(Fbapi4j.IX_PROJECT)), project.get(Fbapi4j.S_PROJECT));
+		for (Project project : findAll()) {
+			if (project.getId() == id) {
+				return project;
+			}
+		}
+		throw new Fbapi4jException("Project with id " + id + " not found");
 	}
 }
