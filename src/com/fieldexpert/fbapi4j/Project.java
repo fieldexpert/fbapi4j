@@ -38,8 +38,7 @@ public class Project extends Entity {
 	}
 
 	public List<Case> getCases() {
-		Session session = SessionFactory.getCurrentSession();
-		return session.query(getName());
+		return SessionFactory.getCurrentSession().query(getName());
 	}
 
 }
