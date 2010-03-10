@@ -29,14 +29,14 @@ class PriorityHandler implements Handler<Priority> {
 		List<Map<String, String>> list = util.data(resp.getDocument(), "priority");
 		List<Priority> priorities = new ArrayList<Priority>();
 		for (Map<String, String> map : list) {
-			priorities.add(new Priority(Long.parseLong(map.get(Fbapi4j.IX_PRIORITY)), map.get(Fbapi4j.S_PRIORITY)));
+			priorities.add(new Priority(Integer.parseInt(map.get(Fbapi4j.IX_PRIORITY)), map.get(Fbapi4j.S_PRIORITY)));
 		}
 		return priorities;
 	}
 
-	public Priority findById(Long id) {
+	public Priority findById(Integer id) {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PRIORITIES, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PRIORITY, id)));
 		Map<String, String> project = util.data(resp.getDocument(), "priority").get(0);
-		return new Priority(Long.parseLong(project.get(Fbapi4j.IX_PRIORITY)), project.get(Fbapi4j.S_PRIORITY));
+		return new Priority(Integer.parseInt(project.get(Fbapi4j.IX_PRIORITY)), project.get(Fbapi4j.S_PRIORITY));
 	}
 }

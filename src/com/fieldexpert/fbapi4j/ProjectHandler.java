@@ -38,14 +38,14 @@ class ProjectHandler implements Handler<Project> {
 		List<Map<String, String>> list = util.data(resp.getDocument(), "project");
 		List<Project> projects = new ArrayList<Project>();
 		for (Map<String, String> map : list) {
-			projects.add(new Project(Long.parseLong(map.get(Fbapi4j.IX_PROJECT)), map.get(Fbapi4j.S_PROJECT)));
+			projects.add(new Project(Integer.parseInt(map.get(Fbapi4j.IX_PROJECT)), map.get(Fbapi4j.S_PROJECT)));
 		}
 		return projects;
 	}
 
-	public Project findById(Long id) {
+	public Project findById(Integer id) {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PROJECTS, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PROJECT, id)));
 		Map<String, String> project = util.data(resp.getDocument(), "project").get(0);
-		return new Project(Long.parseLong(project.get(Fbapi4j.IX_PROJECT)), project.get(Fbapi4j.S_PROJECT));
+		return new Project(Integer.parseInt(project.get(Fbapi4j.IX_PROJECT)), project.get(Fbapi4j.S_PROJECT));
 	}
 }

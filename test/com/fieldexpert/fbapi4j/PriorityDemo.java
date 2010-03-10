@@ -16,7 +16,7 @@ public class PriorityDemo {
 			System.out.println(priority.getId() + " -> " + priority.getName());
 		}
 
-		Priority priority = session.get(Priority.class, 1L);
+		Priority priority = session.get(Priority.class, 1);
 		System.out.println(priority.getName());
 		session.close();
 	}

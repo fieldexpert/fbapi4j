@@ -31,11 +31,11 @@ public class Case extends Entity {
 		this(null, project, area, title, description);
 	}
 
-	Case(Long number, String project, String area, String title, String description) {
+	Case(Integer number, String project, String area, String title, String description) {
 		this(number, project, area, title, description, new ArrayList<Event>());
 	}
 
-	Case(Long number, String project, String area, String title, String description, List<Event> events) {
+	Case(Integer number, String project, String area, String title, String description, List<Event> events) {
 		fields.put(Fbapi4j.S_PROJECT, project);
 		fields.put(Fbapi4j.S_AREA, area);
 		fields.put(Fbapi4j.S_TITLE, title);
@@ -79,12 +79,12 @@ public class Case extends Entity {
 		return attach(new Attachment(filename, type, content.getBytes(Charset.forName("UTF-8"))));
 	}
 
-	void setNumber(Long number) {
+	void setNumber(Integer number) {
 		fields.put(Fbapi4j.IX_BUG, number);
 	}
 
-	public Long getNumber() {
-		return (Long) fields.get(Fbapi4j.IX_BUG);
+	public Integer getNumber() {
+		return (Integer) fields.get(Fbapi4j.IX_BUG);
 	}
 
 	public String getProject() {

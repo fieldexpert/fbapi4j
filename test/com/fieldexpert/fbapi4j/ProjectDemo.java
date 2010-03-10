@@ -19,7 +19,7 @@ public class ProjectDemo {
 			System.out.println(project.getId() + " -> " + project.getName());
 		}
 
-		Project project = session.get(Project.class, 1L);
+		Project project = session.get(Project.class, 1);
 		System.out.println(project.getName());
 		session.close();
 	}

@@ -8,6 +8,6 @@ interface Handler<T extends Entity> {
 
 	List<T> findAll();
 
-	T findById(Long id);
+	T findById(Integer id);
 
 }

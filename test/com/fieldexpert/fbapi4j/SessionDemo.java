@@ -24,7 +24,7 @@ public class SessionDemo {
 		//session.resolve(bug2);
 		//session.close(bug2);
 
-		Case c = session.get(Case.class, 1190L);
+		Case c = session.get(Case.class, 1190);
 		//session.reopen(c);
 		//session.close(c);
 		//session.resolve(c);
@@ -33,7 +33,7 @@ public class SessionDemo {
 		c.setTags("Tag 1", "Tag 3");
 		c.setHoursEstimate(2);
 		c.setPriority(7);
-		Case parent = session.get(Case.class, 1191L);
+		Case parent = session.get(Case.class, 1191);
 		c.setParent(parent);
 		c.setDueDate(new Date());
 		c.setArea("Area 3");

@@ -7,13 +7,13 @@ public class Priority extends Entity {
 
 	private Map<String, Object> fields = new HashMap<String, Object>();
 
-	Priority(Long id, String name) {
+	Priority(Integer id, String name) {
 		fields.put(Fbapi4j.IX_PRIORITY, id);
 		fields.put(Fbapi4j.S_PRIORITY, name);
 	}
 
-	public Long getId() {
-		return (Long) fields.get(Fbapi4j.IX_PRIORITY);
+	public Integer getId() {
+		return (Integer) fields.get(Fbapi4j.IX_PRIORITY);
 	}
 
 	public String getName() {

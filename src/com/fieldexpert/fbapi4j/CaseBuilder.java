@@ -25,7 +25,7 @@ class CaseBuilder {
 
 	Case build(Document doc) {
 		Map<String, String> caseMap = util.data(doc, "case").get(0);
-		Case c = new Case(Long.parseLong(caseMap.get(Fbapi4j.IX_BUG)), caseMap.get(Fbapi4j.S_PROJECT), caseMap.get(Fbapi4j.S_AREA), //
+		Case c = new Case(Integer.parseInt(caseMap.get(Fbapi4j.IX_BUG)), caseMap.get(Fbapi4j.S_PROJECT), caseMap.get(Fbapi4j.S_AREA), //
 				caseMap.get(Fbapi4j.S_TITLE), caseMap.get(Fbapi4j.S_SCOUT_DESCRIPTION));
 
 		List<Event> events = events(doc, c);

@@ -50,7 +50,7 @@ class CaseHandler implements Handler<Case> {
 	}
 
 	private void updateCase(Case c, Map<String, String> data) {
-		c.setNumber(Long.parseLong(data.get(Fbapi4j.IX_BUG)));
+		c.setNumber(Integer.parseInt(data.get(Fbapi4j.IX_BUG)));
 		List<String> allowed = StringUtil.commaDelimitedStringToSet(data.get(Fbapi4j.OPERATIONS));
 		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
 		for (String op : allowed) {
@@ -63,7 +63,7 @@ class CaseHandler implements Handler<Case> {
 		return null;
 	}
 
-	public Case findById(Long id) {
+	public Case findById(Integer id) {
 		String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
 		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, cols)));
 		return new CaseBuilder(util, dispatch.getEndpoint(), token).build(resp.getDocument());

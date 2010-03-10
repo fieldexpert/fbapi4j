@@ -10,7 +10,7 @@ public interface Session {
 
 	void create(Entity t);
 
-	<T extends Entity> T get(Class<T> clazz, Long id);
+	<T extends Entity> T get(Class<T> clazz, Integer id);
 
 	<T extends Entity> List<T> findAll(Class<T> clazz);
 

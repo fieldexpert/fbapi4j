@@ -17,7 +17,7 @@ public class PeopleDemo {
 		for (Person p : session.findAll(Person.class)) {
 			System.out.println(p.getId() + " -> " + p.getFullname());
 		}
-		Person person = session.get(Person.class, 5L);
+		Person person = session.get(Person.class, 5);
 		System.out.println(person.getFullname());
 		
 		session.close();

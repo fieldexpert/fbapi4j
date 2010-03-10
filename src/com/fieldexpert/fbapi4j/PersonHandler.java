@@ -29,13 +29,13 @@ class PersonHandler implements Handler<Person> {
 		List<Map<String, String>> results = util.data(resp.getDocument(), "person");
 		List<Person> peeps = new ArrayList<Person>();
 		for (Map<String, String> p : results) {
-			Person person = new Person(Long.parseLong(p.get(Fbapi4j.IX_PERSON)), p.get(Fbapi4j.S_EMAIL), p.get(Fbapi4j.S_FULLNAME), p.get(Fbapi4j.S_PHONE));
+			Person person = new Person(Integer.parseInt(p.get(Fbapi4j.IX_PERSON)), p.get(Fbapi4j.S_EMAIL), p.get(Fbapi4j.S_FULLNAME), p.get(Fbapi4j.S_PHONE));
 			peeps.add(person);
 		}
 		return peeps;
 	}
 
-	public Person findById(Long id) {
+	public Person findById(Integer id) {
 		for (Person person : findAll()) {
 			if (person.getId() == id) {
 				return person;

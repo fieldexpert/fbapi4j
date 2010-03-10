@@ -7,7 +7,7 @@ public class Person extends Entity {
 
 	private Map<String, Object> fields = new HashMap<String, Object>();
 
-	Person(Long id, String email, String fullname, String phone) {
+	Person(Integer id, String email, String fullname, String phone) {
 		fields.put(Fbapi4j.IX_PERSON, id);
 		fields.put(Fbapi4j.S_EMAIL, email);
 		fields.put(Fbapi4j.S_FULLNAME, fullname);
@@ -22,8 +22,8 @@ public class Person extends Entity {
 		return (String) fields.get(Fbapi4j.S_FULLNAME);
 	}
 
-	public Long getId() {
-		return (Long) fields.get(Fbapi4j.IX_PERSON);
+	public Integer getId() {
+		return (Integer) fields.get(Fbapi4j.IX_PERSON);
 	}
 
 	public String getPhone() {

@@ -11,20 +11,20 @@ public class Project extends Entity {
 		setName(name);
 	}
 
-	Project(Long id, String name) {
+	Project(Integer id, String name) {
 		setId(id);
 		setName(name);
 	}
 
-	public Long getId() {
-		return (Long) fields.get(Fbapi4j.IX_PROJECT);
+	public Integer getId() {
+		return (Integer) fields.get(Fbapi4j.IX_PROJECT);
 	}
 
 	public String getName() {
 		return (String) fields.get(Fbapi4j.S_PROJECT);
 	}
 
-	void setId(Long id) {
+	void setId(Integer id) {
 		fields.put(Fbapi4j.IX_PROJECT, id);
 	}
 

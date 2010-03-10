@@ -94,7 +94,7 @@ class ConnectedSession implements Session {
 		handler.create(t);
 	}
 
-	public <T extends Entity> T get(Class<T> clazz, Long id) {
+	public <T extends Entity> T get(Class<T> clazz, Integer id) {
 		return (T) getHandler(clazz).findById(id);
 	}
 

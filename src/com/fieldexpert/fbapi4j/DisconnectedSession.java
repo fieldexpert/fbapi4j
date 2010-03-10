@@ -40,7 +40,7 @@ class DisconnectedSession implements Session {
 		throw new IllegalStateException("No Session available.");
 	}
 
-	public <T extends Entity> T get(Class<T> clazz, Long id) {
+	public <T extends Entity> T get(Class<T> clazz, Integer id) {
 		throw new IllegalStateException("No Session available.");
 	}
 }

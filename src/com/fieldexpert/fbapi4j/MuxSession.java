@@ -75,7 +75,7 @@ class MuxSession implements Session {
 		return state.findAll(clazz);
 	}
 
-	public <T extends Entity> T get(Class<T> clazz, Long id) {
+	public <T extends Entity> T get(Class<T> clazz, Integer id) {
 		connect();
 		return state.get(clazz, id);
 	}
