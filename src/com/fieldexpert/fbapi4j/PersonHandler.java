@@ -9,19 +9,10 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
-class PersonHandler implements Handler<Person> {
-	private Dispatch dispatch;
-	private Util util;
-	private String token;
+class PersonHandler extends AbstractHandler<Person> {
 
 	PersonHandler(Dispatch dispatch, Util util, String token) {
-		this.dispatch = dispatch;
-		this.util = util;
-		this.token = token;
-	}
-
-	public void create(Person t) {
-		throw new UnsupportedOperationException("Not currently supported.");
+		super(dispatch, util, token);
 	}
 
 	public List<Person> findAll() {
@@ -33,14 +24,5 @@ class PersonHandler implements Handler<Person> {
 			peeps.add(person);
 		}
 		return peeps;
-	}
-
-	public Person findById(Integer id) {
-		for (Person person : findAll()) {
-			if (person.getId() == id) {
-				return person;
-			}
-		}
-		return null;
 	}
 }

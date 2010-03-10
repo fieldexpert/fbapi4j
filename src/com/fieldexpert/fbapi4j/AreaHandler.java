@@ -9,19 +9,10 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
-public class AreaHandler implements Handler<Area> {
-	private Dispatch dispatch;
-	private Util util;
-	private String token;
+class AreaHandler extends AbstractHandler<Area> {
 
-	public AreaHandler(Dispatch dispatch, Util util, String token) {
-		this.dispatch = dispatch;
-		this.util = util;
-		this.token = token;
-	}
-
-	public void create(Area t) {
-		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
+	AreaHandler(Dispatch dispatch, Util util, String token) {
+		super(dispatch, util, token);
 	}
 
 	public List<Area> findAll() {
@@ -36,14 +27,5 @@ public class AreaHandler implements Handler<Area> {
 			areas.add(new Area(Integer.parseInt(map.get(Fbapi4j.IX_AREA)), map.get(Fbapi4j.S_AREA), owner, Integer.parseInt(map.get(Fbapi4j.IX_PROJECT))));
 		}
 		return areas;
-	}
-
-	public Area findById(Integer id) {
-		for (Area area : findAll()) {
-			if (area.getId() == id) {
-				return area;
-			}
-		}
-		return null;
 	}
 }

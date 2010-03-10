@@ -17,17 +17,12 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
-class CaseHandler implements Handler<Case> {
+class CaseHandler extends AbstractHandler<Case> {
 
-	private Dispatch dispatch;
-	private Util util;
-	private String token;
 	private static final String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
 
 	CaseHandler(Dispatch dispatch, Util util, String token) {
-		this.dispatch = dispatch;
-		this.util = util;
-		this.token = token;
+		super(dispatch, util, token);
 	}
 
 	private Map<String, Object> events(Case c) {

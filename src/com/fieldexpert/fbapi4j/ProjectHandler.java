@@ -9,23 +9,10 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
-class ProjectHandler implements Handler<Project> {
-	private Dispatch dispatch;
-	private Util util;
-	private String token;
+class ProjectHandler extends AbstractHandler<Project> {
 
 	ProjectHandler(Dispatch dispatch, Util util, String token) {
-		this.dispatch = dispatch;
-		this.util = util;
-		this.token = token;
-	}
-
-	void setToken(String token) {
-		this.token = token;
-	}
-
-	public void create(Project t) {
-		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
+		super(dispatch, util, token);
 	}
 
 	public List<Project> findAll() {
@@ -38,12 +25,4 @@ class ProjectHandler implements Handler<Project> {
 		return projects;
 	}
 
-	public Project findById(Integer id) {
-		for (Project project : findAll()) {
-			if (project.getId() == id) {
-				return project;
-			}
-		}
-		return null;
-	}
 }

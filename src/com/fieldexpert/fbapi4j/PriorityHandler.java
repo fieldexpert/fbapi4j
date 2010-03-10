@@ -9,19 +9,10 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
-class PriorityHandler implements Handler<Priority> {
-	private Util util;
-	private Dispatch dispatch;
-	private String token;
+class PriorityHandler extends AbstractHandler<Priority> {
 
-	public PriorityHandler(Dispatch dispatch, Util util, String token) {
-		this.util = util;
-		this.dispatch = dispatch;
-		this.token = token;
-	}
-
-	public void create(Priority t) {
-		throw new Fbapi4jException("Cannot create new priorities.");
+	PriorityHandler(Dispatch dispatch, Util util, String token) {
+		super(dispatch, util, token);
 	}
 
 	public List<Priority> findAll() {
@@ -34,12 +25,4 @@ class PriorityHandler implements Handler<Priority> {
 		return priorities;
 	}
 
-	public Priority findById(Integer id) {
-		for (Priority priority : findAll()) {
-			if (priority.getId() == id) {
-				return priority;
-			}
-		}
-		return null;
-	}
 }

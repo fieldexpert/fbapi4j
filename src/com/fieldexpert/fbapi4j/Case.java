@@ -24,7 +24,6 @@ public class Case extends Entity {
 
 	// TODO refactor getNumber --> getId, etc...  number --> id generally (we are the abstraction)
 
-
 	public Case(String project, String area, String title, String description) {
 		this(null, project, area, title, description);
 	}
@@ -41,6 +40,10 @@ public class Case extends Entity {
 		fields.put(Fbapi4j.IX_BUG, number);
 		this.attachments = new ArrayList<Attachment>();
 		this.events = events;
+	}
+
+	public Integer getId() {
+		return getNumber();
 	}
 
 	public Case attach(Attachment attachment) {

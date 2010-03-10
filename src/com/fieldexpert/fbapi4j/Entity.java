@@ -7,4 +7,6 @@ abstract class Entity {
 
 	protected Map<String, Object> fields = new HashMap<String, Object>();
 
+	abstract Integer getId();
+
 }
