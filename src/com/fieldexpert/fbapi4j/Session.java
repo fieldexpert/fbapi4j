@@ -10,6 +10,8 @@ public interface Session {
 
 	void create(Entity t);
 
+	List<Case> query(String... criterion);
+
 	<T extends Entity> T get(Class<T> clazz, Integer id);
 
 	<T extends Entity> List<T> findAll(Class<T> clazz);

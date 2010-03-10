@@ -23,14 +23,33 @@ class CaseBuilder {
 		this.token = token;
 	}
 
-	Case build(Document doc) {
-		Map<String, String> caseMap = util.data(doc, "case").get(0);
+	// TODO cleanup this entire file
+
+	List<Case> list(Document doc) {
+		List<Case> cases = new ArrayList<Case>();
+		for (Map<String, String> caseMap : util.data(doc, "case")) {
+			Case c = new Case(Integer.parseInt(caseMap.get(Fbapi4j.IX_BUG)), caseMap.get(Fbapi4j.S_PROJECT), caseMap.get(Fbapi4j.S_AREA), //
+					caseMap.get(Fbapi4j.S_TITLE), caseMap.get(Fbapi4j.S_SCOUT_DESCRIPTION));
+			List<Event> events = events(doc, c);
+			c.addEvents(events);
+
+			cases.add(c);
+		}
+		return cases;
+	}
+
+	private Case buildCase(Document doc, Map<String, String> caseMap) {
 		Case c = new Case(Integer.parseInt(caseMap.get(Fbapi4j.IX_BUG)), caseMap.get(Fbapi4j.S_PROJECT), caseMap.get(Fbapi4j.S_AREA), //
 				caseMap.get(Fbapi4j.S_TITLE), caseMap.get(Fbapi4j.S_SCOUT_DESCRIPTION));
 
 		List<Event> events = events(doc, c);
 		c.addEvents(events);
 		return c;
+	}
+
+	Case singleResult(Document doc) {
+		Map<String, String> caseMap = util.data(doc, "case").get(0);
+		return buildCase(doc, caseMap);
 	}
 
 	private List<Event> events(Document doc, Case c) {

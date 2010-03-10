@@ -110,4 +110,8 @@ class ConnectedSession implements Session {
 		}
 		return h;
 	}
+
+	public List<Case> query(String... criterion) {
+		return caseHandler.query(criterion);
+	}
 }

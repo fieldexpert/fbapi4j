@@ -22,6 +22,7 @@ class CaseHandler implements Handler<Case> {
 	private Dispatch dispatch;
 	private Util util;
 	private String token;
+	private static final String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
 
 	CaseHandler(Dispatch dispatch, Util util, String token) {
 		this.dispatch = dispatch;
@@ -59,14 +60,19 @@ class CaseHandler implements Handler<Case> {
 		c.setAllowedOperations(operations);
 	}
 
+	public List<Case> query(String... criterion) {
+		String q = collectionToCommaDelimitedString(asList(criterion));
+		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.COLS, cols, Fbapi4j.QUERY, q)));
+		return new CaseBuilder(util, dispatch.getEndpoint(), token).list(resp.getDocument());
+	}
+
 	public List<Case> findAll() {
-		return null;
+		return query();
 	}
 
 	public Case findById(Integer id) {
-		String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
 		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, cols)));
-		return new CaseBuilder(util, dispatch.getEndpoint(), token).build(resp.getDocument());
+		return new CaseBuilder(util, dispatch.getEndpoint(), token).singleResult(resp.getDocument());
 	}
 
 	void scout(Case bug) {

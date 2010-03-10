@@ -79,4 +79,9 @@ class MuxSession implements Session {
 		connect();
 		return state.get(clazz, id);
 	}
+
+	public List<Case> query(String... criterion) {
+		connect();
+		return state.query(criterion);
+	}
 }
