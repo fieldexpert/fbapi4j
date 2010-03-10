@@ -1,12 +1,9 @@
 package com.fieldexpert.fbapi4j;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Project extends Entity {
-
-	private Map<String, Object> fields = new HashMap<String, Object>();
 
 	public Project(String name) {
 		setName(name);

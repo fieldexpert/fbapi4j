@@ -1,11 +1,6 @@
 package com.fieldexpert.fbapi4j;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Person extends Entity {
-
-	private Map<String, Object> fields = new HashMap<String, Object>();
 
 	Person(Integer id, String email, String fullname, String phone) {
 		fields.put(Fbapi4j.IX_PERSON, id);

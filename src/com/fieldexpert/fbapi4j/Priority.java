@@ -1,11 +1,7 @@
 package com.fieldexpert.fbapi4j;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Priority extends Entity {
-
-	private Map<String, Object> fields = new HashMap<String, Object>();
 
 	Priority(Integer id, String name) {
 		fields.put(Fbapi4j.IX_PRIORITY, id);

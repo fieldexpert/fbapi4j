@@ -9,7 +9,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +24,6 @@ public class Case extends Entity {
 
 	// TODO refactor getNumber --> getId, etc...  number --> id generally (we are the abstraction)
 
-	private Map<String, Object> fields = new HashMap<String, Object>();
 
 	public Case(String project, String area, String title, String description) {
 		this(null, project, area, title, description);

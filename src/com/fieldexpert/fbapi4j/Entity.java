@@ -1,6 +1,10 @@
 package com.fieldexpert.fbapi4j;
 
-// TODO Currently just a marker class...More will be added, I'm sure.
+import java.util.HashMap;
+import java.util.Map;
+
 abstract class Entity {
+
+	protected Map<String, Object> fields = new HashMap<String, Object>();
 
 }
