@@ -132,4 +132,7 @@ public final class Fbapi4j {
 
 	public static final String TOKEN = "token";
 
+	public static final String IX_PERSON_OWNER = "ixPersonOwner";
+
+	public static final String LIST_AREAS = "listAreas";
 }
