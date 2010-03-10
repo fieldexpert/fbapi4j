@@ -35,8 +35,11 @@ class PriorityHandler implements Handler<Priority> {
 	}
 
 	public Priority findById(Integer id) {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PRIORITIES, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PRIORITY, id)));
-		Map<String, String> project = util.data(resp.getDocument(), "priority").get(0);
-		return new Priority(Integer.parseInt(project.get(Fbapi4j.IX_PRIORITY)), project.get(Fbapi4j.S_PRIORITY));
+		for (Priority priority : findAll()) {
+			if (priority.getId() == id) {
+				return priority;
+			}
+		}
+		throw new IllegalArgumentException("Priority with id " + id + " does not exist");
 	}
 }
