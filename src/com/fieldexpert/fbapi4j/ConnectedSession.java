@@ -24,6 +24,8 @@ class ConnectedSession implements Session {
 	private ProjectHandler projectHandler;
 	@SuppressWarnings("unused")
 	private PriorityHandler priorityHandler;
+	@SuppressWarnings("unused")
+	private PersonHandler personHandler;
 
 	private Map<Class<? extends Entity>, Handler<? extends Entity>> handlers = new HashMap<Class<? extends Entity>, Handler<? extends Entity>>();
 
@@ -34,8 +36,9 @@ class ConnectedSession implements Session {
 
 	private void initHandlers() {
 		handlers.put(Case.class, caseHandler = new CaseHandler(dispatch, util, token));
-		handlers.put(Project.class, projectHandler = new ProjectHandler(dispatch, util, token));
+		handlers.put(Person.class, personHandler = new PersonHandler(dispatch, util, token));
 		handlers.put(Priority.class, priorityHandler = new PriorityHandler(dispatch, util, token));
+		handlers.put(Project.class, projectHandler = new ProjectHandler(dispatch, util, token));
 	}
 
 	private void api() {

@@ -20,15 +20,11 @@ public final class Fbapi4j {
 
 	public static final String DT_DUE = "dtDue";
 
-	public static final String NEW_PROJECT = "newProject";
-
 	public static final String EDIT = "edit";
 
 	public static final String EMAIL = "email";
 
 	public static final String EVENTS = "events";
-
-	public static final String LIST_PROJECTS = "listProjects";
 
 	public static final String EVN_DESC = "evtDescription";
 
@@ -54,11 +50,19 @@ public final class Fbapi4j {
 
 	public static final String IX_MAILBOX = "ixMailbox"; // - if you set sCustomerEmail, you'll want to set this too... otherwise you won't be able to reply to this case
 
+	public static final String IX_PERSON = "ixPerson";
+
 	public static final String IX_PERSON_ASSIGNED_TO = "ixPersonAssignedTo";
 
 	public static final String IX_PRIORITY = "ixPriority";
 
 	public static final String IX_PROJECT = "ixProject";
+
+	public static final String LIST_PEOPLE = "listPeople";
+
+	public static final String LIST_PRIORITIES = "listPriorities";
+
+	public static final String LIST_PROJECTS = "listProjects";
 
 	public static final String LOGOFF = "logoff";
 
@@ -67,6 +71,8 @@ public final class Fbapi4j {
 	public static final String N_FILE_COUNT = "nFileCount"; // The number of files being uploaded
 
 	public static final String NEW = "new";
+
+	public static final String NEW_PROJECT = "newProject";
 
 	public static final String OPERATIONS = "operations";
 
@@ -88,15 +94,19 @@ public final class Fbapi4j {
 
 	public static final String S_CUSTOMER_EMAIL = "sCustomerEmail"; // - only the API lets you set this
 
+	public static final String S_EMAIL = "sEmail";
+
 	public static final String S_EVENT = "sEvent"; // - text description of the bugevent
 
 	public static final String S_FILENAME = "sFileName";
 
+	public static final String S_FULLNAME = "sFullName";
+
 	public static final String S_PERSON = "sPerson";
 
 	public static final String S_PERSON_ASSIGNED_TO = "sPersonAssignedTo";
-	
-	public static final String LIST_PRIORITIES = "listPriorities";
+
+	public static final String S_PHONE = "sPhone";
 
 	public static final String S_PRIORITY = "sPriority";
 
