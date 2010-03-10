@@ -7,6 +7,10 @@ public class Project extends Entity {
 
 	private Map<String, Object> fields = new HashMap<String, Object>();
 
+	public Project(String name) {
+		setName(name);
+	}
+
 	Project(Long id, String name) {
 		setId(id);
 		setName(name);

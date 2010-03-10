@@ -1,6 +1,5 @@
 package com.fieldexpert.fbapi4j;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
@@ -14,11 +13,6 @@ class MuxSession implements Session {
 		this.disconnected = new DisconnectedSession();
 		this.connected = new ConnectedSession(dispatch);
 		this.state = disconnected;
-	}
-
-	public void assign(Case bug) {
-		connect();
-		state.assign(bug);
 	}
 
 	public void close() {
@@ -38,11 +32,6 @@ class MuxSession implements Session {
 			connected.logon();
 			state = connected;
 		}
-	}
-
-	public void create(Case bug) {
-		connect();
-		state.create(bug);
 	}
 
 	private void disconnect() {
@@ -76,13 +65,18 @@ class MuxSession implements Session {
 		state.scout(bug);
 	}
 
-	public <T extends Entity> T get(Class<T> clazz, Serializable id) {
+	public void create(Entity t) {
 		connect();
-		return state.get(clazz, id);
+		state.create(t);
 	}
 
 	public <T extends Entity> List<T> findAll(Class<T> clazz) {
 		connect();
 		return state.findAll(clazz);
+	}
+
+	public <T extends Entity> T get(Class<T> clazz, Long id) {
+		connect();
+		return state.get(clazz, id);
 	}
 }

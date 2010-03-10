@@ -23,17 +23,19 @@ public class Case extends Entity {
 	private List<Event> events;
 	private Set<AllowedOperation> allowedOperations;
 
+	// TODO refactor getNumber --> getId, etc...  number --> id generally (we are the abstraction)
+
 	private Map<String, Object> fields = new HashMap<String, Object>();
 
 	public Case(String project, String area, String title, String description) {
 		this(null, project, area, title, description);
 	}
 
-	Case(String number, String project, String area, String title, String description) {
+	Case(Long number, String project, String area, String title, String description) {
 		this(number, project, area, title, description, new ArrayList<Event>());
 	}
 
-	Case(String number, String project, String area, String title, String description, List<Event> events) {
+	Case(Long number, String project, String area, String title, String description, List<Event> events) {
 		fields.put(Fbapi4j.S_PROJECT, project);
 		fields.put(Fbapi4j.S_AREA, area);
 		fields.put(Fbapi4j.S_TITLE, title);
@@ -77,12 +79,12 @@ public class Case extends Entity {
 		return attach(new Attachment(filename, type, content.getBytes(Charset.forName("UTF-8"))));
 	}
 
-	void setNumber(String number) {
+	void setNumber(Long number) {
 		fields.put(Fbapi4j.IX_BUG, number);
 	}
 
-	public String getNumber() {
-		return (String) fields.get(Fbapi4j.IX_BUG);
+	public Long getNumber() {
+		return (Long) fields.get(Fbapi4j.IX_BUG);
 	}
 
 	public String getProject() {
@@ -128,8 +130,15 @@ public class Case extends Entity {
 		fields.put(Fbapi4j.S_EVENT, description);
 	}
 
+	public void setPriority(int priority) {
+		if (priority < 1 || priority > 7) {
+			throw new IllegalArgumentException("Priority must be between 1 and 7");
+		}
+		fields.put(Fbapi4j.IX_PRIORITY, priority);
+	}
+
 	public void setPriority(Priority priority) {
-		fields.put(Fbapi4j.S_PRIORITY, priority.getValue());
+		setPriority(priority.getId().intValue());
 	}
 
 	public void setDueDate(Date date) {

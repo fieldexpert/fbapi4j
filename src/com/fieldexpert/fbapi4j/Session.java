@@ -1,23 +1,20 @@
 package com.fieldexpert.fbapi4j;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface Session {
-
-	void assign(Case bug);
 
 	void close();
 
 	void close(Case bug);
 
-	void create(Case bug);
+	void create(Entity t);
 
-	void edit(Case bug);
-
-	<T extends Entity> T get(Class<T> clazz, Serializable id);
+	<T extends Entity> T get(Class<T> clazz, Long id);
 
 	<T extends Entity> List<T> findAll(Class<T> clazz);
+
+	void edit(Case bug);
 
 	void reactivate(Case bug);
 

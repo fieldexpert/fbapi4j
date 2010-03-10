@@ -20,6 +20,8 @@ public final class Fbapi4j {
 
 	public static final String DT_DUE = "dtDue";
 
+	public static final String NEW_PROJECT = "newProject";
+
 	public static final String EDIT = "edit";
 
 	public static final String EMAIL = "email";
@@ -93,6 +95,8 @@ public final class Fbapi4j {
 	public static final String S_PERSON = "sPerson";
 
 	public static final String S_PERSON_ASSIGNED_TO = "sPersonAssignedTo";
+	
+	public static final String LIST_PRIORITIES = "listPriorities";
 
 	public static final String S_PRIORITY = "sPriority";
 

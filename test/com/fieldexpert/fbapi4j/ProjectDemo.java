@@ -13,6 +13,8 @@ public class ProjectDemo {
 
 		Session session = conf.getSession();
 
+		//session.create(new Project("Nathan Test Project"));
+
 		for (Project project : session.findAll(Project.class)) {
 			System.out.println(project.getId() + " -> " + project.getName());
 		}
