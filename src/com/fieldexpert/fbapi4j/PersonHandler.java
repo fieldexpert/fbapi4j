@@ -41,6 +41,6 @@ class PersonHandler implements Handler<Person> {
 				return person;
 			}
 		}
-		throw new Fbapi4jException("Person with id " + id + " not found");
+		return null;
 	}
 }

@@ -44,6 +44,6 @@ class ProjectHandler implements Handler<Project> {
 				return project;
 			}
 		}
-		throw new Fbapi4jException("Project with id " + id + " not found");
+		return null;
 	}
 }

@@ -40,6 +40,6 @@ class PriorityHandler implements Handler<Priority> {
 				return priority;
 			}
 		}
-		throw new IllegalArgumentException("Priority with id " + id + " does not exist");
+		return null;
 	}
 }
