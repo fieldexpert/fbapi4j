@@ -19,9 +19,13 @@ public class ProjectDemo {
 			System.out.println(project.getId() + " -> " + project.getName());
 		}
 
-		Project project = session.get(Project.class, 1);
+		Project project = session.get(Project.class, 17);
 		System.out.println(project.getName());
+		System.out.println(project.getCases().size());
 		session.close();
+
+		// Throws an exception since there isn't a session available.
+		System.out.println(project.getCases());
 	}
 
 }

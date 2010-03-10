@@ -32,12 +32,14 @@ class MuxSession implements Session {
 			connected.logon();
 			state = connected;
 		}
+		SessionFactory.setCurrentSession(state);
 	}
 
 	private void disconnect() {
 		if (state == connected) {
 			state = disconnected;
 		}
+		SessionFactory.setCurrentSession(null);
 	}
 
 	public void edit(Case bug) {

@@ -1,6 +1,7 @@
 package com.fieldexpert.fbapi4j;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Project extends Entity {
@@ -34,6 +35,11 @@ public class Project extends Entity {
 
 	Map<String, Object> getFields() {
 		return fields;
+	}
+
+	public List<Case> getCases() {
+		Session session = SessionFactory.getCurrentSession();
+		return session.query(getName());
 	}
 
 }
