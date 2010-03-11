@@ -20,13 +20,9 @@ class ConnectedSession implements Session {
 	private Util util;
 
 	private CaseHandler caseHandler;
-	@SuppressWarnings("unused")
 	private ProjectHandler projectHandler;
-	@SuppressWarnings("unused")
 	private PriorityHandler priorityHandler;
-	@SuppressWarnings("unused")
 	private PersonHandler personHandler;
-	@SuppressWarnings("unused")
 	private AreaHandler areaHandler;
 
 	private Map<Class<? extends Entity>, Handler<? extends Entity>> handlers = new HashMap<Class<? extends Entity>, Handler<? extends Entity>>();
@@ -116,5 +112,25 @@ class ConnectedSession implements Session {
 
 	public List<Case> query(String... criterion) {
 		return caseHandler.query(criterion);
+	}
+
+	AreaHandler getAreaHandler() {
+		return areaHandler;
+	}
+
+	CaseHandler getCaseHandler() {
+		return caseHandler;
+	}
+
+	PersonHandler getPersonHandler() {
+		return personHandler;
+	}
+
+	ProjectHandler getProjectHandler() {
+		return projectHandler;
+	}
+
+	PriorityHandler getPriorityHandler() {
+		return priorityHandler;
 	}
 }

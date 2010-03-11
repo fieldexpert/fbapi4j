@@ -38,4 +38,12 @@ public class Project extends Entity {
 		return SessionFactory.getCurrentSession().query(getName());
 	}
 
+	public List<Area> getAreas() {
+		if (getId() == null) {
+			throw new Fbapi4jException("Project has not been persisted.");
+		}
+		ConnectedSession session = (ConnectedSession) SessionFactory.getCurrentSession();
+		return session.getAreaHandler().getByProject(getId());
+	}
+
 }

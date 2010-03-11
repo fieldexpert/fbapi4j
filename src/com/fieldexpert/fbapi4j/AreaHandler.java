@@ -29,6 +29,10 @@ class AreaHandler extends AbstractHandler<Area> {
 
 	public List<Area> findAll() {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_AREAS, util.map(Fbapi4j.TOKEN, token)));
+		return buildAreas(resp);
+	}
+
+	private List<Area> buildAreas(Response resp) {
 		List<Map<String, String>> list = util.data(resp.getDocument(), "area");
 		List<Area> areas = new ArrayList<Area>();
 		for (Map<String, String> map : list) {
@@ -40,4 +44,14 @@ class AreaHandler extends AbstractHandler<Area> {
 		}
 		return areas;
 	}
+
+	public List<Area> getByProject(Project project) {
+		return getByProject(project.getId());
+	}
+
+	public List<Area> getByProject(Integer project) {
+		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_AREAS, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PROJECT, project)));
+		return buildAreas(resp);
+	}
+
 }
