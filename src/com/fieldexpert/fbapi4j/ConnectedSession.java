@@ -20,9 +20,6 @@ class ConnectedSession implements Session {
 	private Util util;
 
 	private CaseHandler caseHandler;
-	private ProjectHandler projectHandler;
-	private PriorityHandler priorityHandler;
-	private PersonHandler personHandler;
 	private AreaHandler areaHandler;
 
 	private Map<Class<? extends Entity>, Handler<? extends Entity>> handlers = new HashMap<Class<? extends Entity>, Handler<? extends Entity>>();
@@ -35,9 +32,9 @@ class ConnectedSession implements Session {
 	private void initHandlers() {
 		handlers.put(Area.class, areaHandler = new AreaHandler(dispatch, util, token));
 		handlers.put(Case.class, caseHandler = new CaseHandler(dispatch, util, token));
-		handlers.put(Person.class, personHandler = new PersonHandler(dispatch, util, token));
-		handlers.put(Priority.class, priorityHandler = new PriorityHandler(dispatch, util, token));
-		handlers.put(Project.class, projectHandler = new ProjectHandler(dispatch, util, token));
+		handlers.put(Person.class, new PersonHandler(dispatch, util, token));
+		handlers.put(Priority.class, new PriorityHandler(dispatch, util, token));
+		handlers.put(Project.class, new ProjectHandler(dispatch, util, token));
 	}
 
 	private void api() {
@@ -114,23 +111,7 @@ class ConnectedSession implements Session {
 		return caseHandler.query(criterion);
 	}
 
-	AreaHandler getAreaHandler() {
-		return areaHandler;
-	}
-
-	CaseHandler getCaseHandler() {
-		return caseHandler;
-	}
-
-	PersonHandler getPersonHandler() {
-		return personHandler;
-	}
-
-	ProjectHandler getProjectHandler() {
-		return projectHandler;
-	}
-
-	PriorityHandler getPriorityHandler() {
-		return priorityHandler;
+	List<Area> findAreasByProjectId(Integer id) {
+		return areaHandler.getByProject(id);
 	}
 }

@@ -43,7 +43,7 @@ public class Project extends Entity {
 			throw new Fbapi4jException("Project has not been persisted.");
 		}
 		ConnectedSession session = (ConnectedSession) SessionFactory.getCurrentSession();
-		return session.getAreaHandler().getByProject(getId());
+		return session.findAreasByProjectId(getId());
 	}
 
 }
