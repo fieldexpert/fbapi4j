@@ -23,8 +23,24 @@ public class Area extends Entity {
 		this(name, owner.getId(), project);
 	}
 
+	/**
+	 * If they don't specify the owner, we use -1, which is the project's
+	 * primary owner
+	 */
+	public Area(String name, Integer project) {
+		this(name, -1, project);
+	}
+
+	public Area(String name, Project project) {
+		this(name, project.getId());
+	}
+
 	public Area(String name, Integer owner, Project project) {
 		this(name, owner, project.getId());
+	}
+
+	void setId(Integer id) {
+		fields.put(Fbapi4j.IX_AREA, id);
 	}
 
 	public Integer getId() {

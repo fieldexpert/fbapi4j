@@ -1,8 +1,11 @@
 package com.fieldexpert.fbapi4j;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.w3c.dom.Node;
 
 import com.fieldexpert.fbapi4j.common.Util;
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
@@ -13,6 +16,15 @@ class AreaHandler extends AbstractHandler<Area> {
 
 	AreaHandler(Dispatch dispatch, Util util, String token) {
 		super(dispatch, util, token);
+	}
+
+	public void create(Area area) {
+		Map<String, Object> params = new HashMap<String, Object>(area.getFields());
+		params.put(Fbapi4j.TOKEN, token);
+		Response resp = dispatch.invoke(new Request(Fbapi4j.NEW_AREA, params));
+		Node node = resp.getDocument().getElementsByTagName("area").item(0);
+		Integer id = Integer.parseInt(util.children(node).get(Fbapi4j.IX_AREA));
+		area.setId(id);
 	}
 
 	public List<Area> findAll() {

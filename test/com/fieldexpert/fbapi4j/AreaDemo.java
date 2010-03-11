@@ -17,6 +17,10 @@ public class AreaDemo {
 			System.out.println(area.getId() + " -> " + area.getName() + " -> " + area.getProject().getName());
 		}
 
+		//Project project = session.get(Project.class, 8); // 8 = FX Internal
+		//Area area = new Area("Nathan's Area 7", project);
+		//System.out.println(area.getId());
+		//session.create(area);
 		session.close();
 
 	}

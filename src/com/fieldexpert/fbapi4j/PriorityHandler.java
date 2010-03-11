@@ -15,6 +15,10 @@ class PriorityHandler extends AbstractHandler<Priority> {
 		super(dispatch, util, token);
 	}
 
+	public void create(Priority p) {
+		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
+	}
+
 	public List<Priority> findAll() {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PRIORITIES, util.map(Fbapi4j.TOKEN, token)));
 		List<Map<String, String>> list = util.data(resp.getDocument(), "priority");

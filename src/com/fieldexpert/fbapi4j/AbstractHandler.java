@@ -14,10 +14,6 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 		this.token = token;
 	}
 
-	public void create(Entity e) {
-		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
-	}
-
 	public T findById(Integer id) {
 		for (T t : findAll()) {
 			if (t.getId() == id) {

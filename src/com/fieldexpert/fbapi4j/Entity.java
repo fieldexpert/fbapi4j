@@ -9,4 +9,7 @@ abstract class Entity {
 
 	abstract Integer getId();
 
+	Map<String, Object> getFields() {
+		return fields;
+	}
 }

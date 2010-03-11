@@ -15,6 +15,10 @@ class PersonHandler extends AbstractHandler<Person> {
 		super(dispatch, util, token);
 	}
 
+	public void create(Person p) {
+		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
+	}
+
 	public List<Person> findAll() {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PEOPLE, util.map(Fbapi4j.TOKEN, token)));
 		List<Map<String, String>> results = util.data(resp.getDocument(), "person");

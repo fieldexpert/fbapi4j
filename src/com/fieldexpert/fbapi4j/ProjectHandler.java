@@ -15,6 +15,10 @@ class ProjectHandler extends AbstractHandler<Project> {
 		super(dispatch, util, token);
 	}
 
+	public void create(Project p) {
+		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
+	}
+
 	public List<Project> findAll() {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PROJECTS, util.map(Fbapi4j.TOKEN, token)));
 		List<Map<String, String>> list = util.data(resp.getDocument(), "project");

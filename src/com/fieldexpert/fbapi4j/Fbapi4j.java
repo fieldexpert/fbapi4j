@@ -54,9 +54,13 @@ public final class Fbapi4j {
 
 	public static final String IX_PERSON_ASSIGNED_TO = "ixPersonAssignedTo";
 
+	public static final String IX_PERSON_OWNER = "ixPersonOwner";
+
 	public static final String IX_PRIORITY = "ixPriority";
 
 	public static final String IX_PROJECT = "ixProject";
+
+	public static final String LIST_AREAS = "listAreas";
 
 	public static final String LIST_PEOPLE = "listPeople";
 
@@ -71,6 +75,8 @@ public final class Fbapi4j {
 	public static final String N_FILE_COUNT = "nFileCount"; // The number of files being uploaded
 
 	public static final String NEW = "new";
+
+	public static final String NEW_AREA = "newArea";
 
 	public static final String NEW_PROJECT = "newProject";
 
@@ -132,7 +138,4 @@ public final class Fbapi4j {
 
 	public static final String TOKEN = "token";
 
-	public static final String IX_PERSON_OWNER = "ixPersonOwner";
-
-	public static final String LIST_AREAS = "listAreas";
 }
