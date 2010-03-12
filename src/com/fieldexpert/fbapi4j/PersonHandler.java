@@ -16,6 +16,7 @@ class PersonHandler extends AbstractHandler<Person> {
 	}
 
 	public void create(Person p) {
+		// TODO Implement
 		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
 	}
 

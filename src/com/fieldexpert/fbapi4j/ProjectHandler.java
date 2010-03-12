@@ -16,6 +16,7 @@ class ProjectHandler extends AbstractHandler<Project> {
 	}
 
 	public void create(Project p) {
+		// TODO Implement
 		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
 	}
 
