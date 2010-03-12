@@ -14,13 +14,4 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 		this.token = token;
 	}
 
-	public T findById(Integer id) {
-		for (T t : findAll()) {
-			if (t.getId() == id) {
-				return t;
-			}
-		}
-		return null;
-	}
-
 }

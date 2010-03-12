@@ -138,4 +138,12 @@ public final class Fbapi4j {
 
 	public static final String TOKEN = "token";
 
+	public static final String VIEW_PROJECT = "viewProject";
+
+	public static final String VIEW_AREA = "viewArea";
+
+	public static final String VIEW_PERSON = "viewPerson";
+
+	public static final String VIEW_PRIORITY = "viewPriority";
+
 }

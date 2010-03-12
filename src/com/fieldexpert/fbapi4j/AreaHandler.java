@@ -54,4 +54,14 @@ class AreaHandler extends AbstractHandler<Area> {
 		return buildAreas(resp);
 	}
 
+	public Area findById(Integer id) {
+		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_AREA, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_AREA, id)));
+		Map<String, String> map = util.data(resp.getDocument(), "area").get(0);
+		Integer owner = null;
+		if (map.containsKey(Fbapi4j.IX_PERSON_OWNER)) {
+			owner = Integer.parseInt(map.get(Fbapi4j.IX_PERSON_OWNER));
+		}
+		return new Area(Integer.parseInt(map.get(Fbapi4j.IX_AREA)), map.get(Fbapi4j.S_AREA), owner, Integer.parseInt(map.get(Fbapi4j.IX_PROJECT)));
+	}
+
 }

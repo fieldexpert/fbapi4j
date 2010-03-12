@@ -29,4 +29,10 @@ class PriorityHandler extends AbstractHandler<Priority> {
 		return priorities;
 	}
 
+	public Priority findById(Integer id) {
+		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PRIORITY, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PRIORITY, id)));
+		Map<String, String> map = util.data(resp.getDocument(), "priority").get(0);
+		return new Priority(Integer.parseInt(map.get(Fbapi4j.IX_PRIORITY)), map.get(Fbapi4j.S_PRIORITY));
+	}
+
 }
