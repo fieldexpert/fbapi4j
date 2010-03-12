@@ -86,4 +86,10 @@ class MuxSession implements Session {
 		connect();
 		return state.query(criterion);
 	}
+
+	public <T extends Entity> T get(Class<T> clazz, String name) {
+		connect();
+		return state.get(clazz, name);
+	}
+
 }

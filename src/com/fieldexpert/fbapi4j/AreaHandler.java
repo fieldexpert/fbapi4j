@@ -64,4 +64,7 @@ class AreaHandler extends AbstractHandler<Area> {
 		return new Area(Integer.parseInt(map.get(Fbapi4j.IX_AREA)), map.get(Fbapi4j.S_AREA), owner, Integer.parseInt(map.get(Fbapi4j.IX_PROJECT)));
 	}
 
+	public Area findByName(String name) {
+		throw new Fbapi4jException("Not supported, since Area names do not need to be unique.");
+	}
 }

@@ -23,6 +23,8 @@ public class ProjectDemo {
 		System.out.println(project.getName());
 		System.out.println(project.getCases().size());
 		System.out.println(project.getAreas());
+
+		System.out.println(session.get(Project.class, "Comet Circle").getId());
 		session.close();
 
 		// Throws an exception since there isn't a session available.

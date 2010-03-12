@@ -47,4 +47,8 @@ class DisconnectedSession implements Session {
 	public List<Case> query(String... criterion) {
 		throw new IllegalStateException("No Session available.");
 	}
+
+	public <T extends Entity> T get(Class<T> clazz, String name) {
+		throw new IllegalStateException("No Session available.");
+	}
 }

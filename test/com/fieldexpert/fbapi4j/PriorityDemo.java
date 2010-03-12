@@ -18,6 +18,8 @@ public class PriorityDemo {
 
 		Priority priority = session.get(Priority.class, 7);
 		System.out.println(priority.getName());
+
+		System.out.println(session.get(Priority.class, ""));
 		session.close();
 	}
 

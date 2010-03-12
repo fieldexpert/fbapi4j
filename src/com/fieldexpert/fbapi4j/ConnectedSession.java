@@ -94,6 +94,10 @@ class ConnectedSession implements Session {
 		return (T) getHandler(clazz).findById(id);
 	}
 
+	public <T extends Entity> T get(Class<T> clazz, String name) {
+		return (T) getHandler(clazz).findByName(name);
+	}
+
 	public <T extends Entity> List<T> findAll(Class<T> clazz) {
 		return getHandler(clazz).findAll();
 	}
@@ -114,4 +118,5 @@ class ConnectedSession implements Session {
 	List<Area> findAreasByProjectId(Integer id) {
 		return areaHandler.getByProject(id);
 	}
+
 }

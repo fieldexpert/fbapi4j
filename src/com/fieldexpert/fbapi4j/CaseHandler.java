@@ -122,6 +122,10 @@ class CaseHandler extends AbstractHandler<Case> {
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
+	public Case findByName(String name) {
+		throw new UnsupportedOperationException("Not *yet* supported");
+	}
+
 	public void close(Case bug) {
 		Assert.notNull(token);
 		if (!bug.getAllowedOperations().contains(AllowedOperation.CLOSE)) {

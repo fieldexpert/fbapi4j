@@ -29,6 +29,12 @@ class ProjectHandler extends AbstractHandler<Project> {
 		return projects;
 	}
 
+	public Project findByName(String name) {
+		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PROJECT, util.map(Fbapi4j.TOKEN, token, Fbapi4j.S_PROJECT, name)));
+		Map<String, String> map = util.data(resp.getDocument(), "project").get(0);
+		return new Project(Integer.parseInt(map.get(Fbapi4j.IX_PROJECT)), map.get(Fbapi4j.S_PROJECT));
+	}
+
 	public Project findById(Integer id) {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PROJECT, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PROJECT, id)));
 		Map<String, String> map = util.data(resp.getDocument(), "project").get(0);

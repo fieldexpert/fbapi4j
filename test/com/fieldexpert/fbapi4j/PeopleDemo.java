@@ -12,14 +12,15 @@ public class PeopleDemo {
 		conf.setProperty("password", password);
 
 		Session session = conf.getSession();
-		
-		
+
 		for (Person p : session.findAll(Person.class)) {
 			System.out.println(p.getId() + " -> " + p.getFullname());
 		}
 		Person person = session.get(Person.class, 5);
 		System.out.println(person.getFullname());
-		
+
+		System.out.println(session.get(Person.class, "nathan.bowser@fieldexpert.com").getFullname());
+
 		session.close();
 	}
 

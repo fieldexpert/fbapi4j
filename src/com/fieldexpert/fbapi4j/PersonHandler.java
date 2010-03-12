@@ -30,6 +30,12 @@ class PersonHandler extends AbstractHandler<Person> {
 		return peeps;
 	}
 
+	public Person findByName(String name) {
+		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PERSON, util.map(Fbapi4j.TOKEN, token, Fbapi4j.S_EMAIL, name)));
+		Map<String, String> p = util.data(resp.getDocument(), "person").get(0);
+		return new Person(Integer.parseInt(p.get(Fbapi4j.IX_PERSON)), p.get(Fbapi4j.S_EMAIL), p.get(Fbapi4j.S_FULLNAME), p.get(Fbapi4j.S_PHONE));
+	}
+
 	public Person findById(Integer id) {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PERSON, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PERSON, id)));
 		Map<String, String> p = util.data(resp.getDocument(), "person").get(0);

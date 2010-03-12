@@ -10,4 +10,6 @@ interface Handler<T extends Entity> {
 
 	T findById(Integer id);
 
+	T findByName(String name);
+
 }

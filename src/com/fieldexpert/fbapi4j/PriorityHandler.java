@@ -29,6 +29,10 @@ class PriorityHandler extends AbstractHandler<Priority> {
 		return priorities;
 	}
 
+	public Priority findByName(String name) {
+		throw new Fbapi4jException("Operation is not supported by fogbugz");
+	}
+
 	public Priority findById(Integer id) {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PRIORITY, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PRIORITY, id)));
 		Map<String, String> map = util.data(resp.getDocument(), "priority").get(0);

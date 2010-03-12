@@ -14,6 +14,8 @@ public interface Session {
 
 	<T extends Entity> T get(Class<T> clazz, Integer id);
 
+	<T extends Entity> T get(Class<T> clazz, String name);
+
 	<T extends Entity> List<T> findAll(Class<T> clazz);
 
 	void edit(Case bug);
