@@ -16,7 +16,7 @@ class PriorityHandler extends AbstractHandler<Priority> {
 	}
 
 	public void create(Priority p) {
-		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
+		throw new UnsupportedOperationException("Operation is not supported by the Fogbugz API");
 	}
 
 	public List<Priority> findAll() {
