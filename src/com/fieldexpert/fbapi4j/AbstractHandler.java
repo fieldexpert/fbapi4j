@@ -31,9 +31,30 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 
 	abstract T build(Map<String, String> data);
 
+	protected final Response execute(Request request) {
+		return dispatch.invoke(request);
+	}
+
+	protected final T find(Request request) {
+		Response resp = execute(request);
+		Map<String, String> map = util.data(resp.getDocument(), config.element()).get(0);
+		return build(map);
+	}
+
 	public List<T> findAll() {
-		Response resp = dispatch.invoke(new Request(config.list(), util.map(Fbapi4j.TOKEN, token)));
-		List<Map<String, String>> results = util.data(resp.getDocument(), config.element());
+		Response resp = execute(new Request(config.list(), util.map(Fbapi4j.TOKEN, token)));
+		return list(resp);
+	}
+
+	public T findById(Integer id) {
+		return find(new Request(config.single(), util.map(Fbapi4j.TOKEN, token, config.id(), id)));
+	}
+
+	public T findByName(String name) {
+		return find(new Request(config.single(), util.map(Fbapi4j.TOKEN, token, config.name(), name)));
+	}
+
+	protected final List<T> list(List<Map<String, String>> results) {
 		List<T> objects = new ArrayList<T>();
 		for (Map<String, String> data : results) {
 			objects.add(build(data));
@@ -41,16 +62,8 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 		return objects;
 	}
 
-	public T findById(Integer id) {
-		Response resp = dispatch.invoke(new Request(config.single(), util.map(Fbapi4j.TOKEN, token, config.id(), id)));
-		Map<String, String> map = util.data(resp.getDocument(), config.element()).get(0);
-		return build(map);
-	}
-
-	public T findByName(String name) {
-		Response resp = dispatch.invoke(new Request(config.single(), util.map(Fbapi4j.TOKEN, token, config.name(), name)));
-		Map<String, String> map = util.data(resp.getDocument(), config.element()).get(0);
-		return build(map);
+	protected final List<T> list(Response response) {
+		return list(util.data(response.getDocument(), config.element()));
 	}
 
 }

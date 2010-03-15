@@ -1,6 +1,5 @@
 package com.fieldexpert.fbapi4j;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,18 +35,9 @@ class AreaHandler extends AbstractHandler<Area> {
 		area.setId(id);
 	}
 
-	private List<Area> buildAreas(Response resp) {
-		List<Map<String, String>> list = util.data(resp.getDocument(), "area");
-		List<Area> areas = new ArrayList<Area>();
-		for (Map<String, String> map : list) {
-			areas.add(build(map));
-		}
-		return areas;
-	}
-
 	public List<Area> getByProject(Integer project) {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_AREAS, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PROJECT, project)));
-		return buildAreas(resp);
+		Response resp = execute(new Request(Fbapi4j.LIST_AREAS, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PROJECT, project)));
+		return list(resp);
 	}
 
 	@Override
