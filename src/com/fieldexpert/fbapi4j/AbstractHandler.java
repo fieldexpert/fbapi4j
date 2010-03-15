@@ -22,8 +22,8 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 		this.token = token;
 
 		@SuppressWarnings("unchecked")
-		Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		this.config = clazz.getAnnotation(EntityConfig.class);
+		Class<T> entity = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		this.config = entity.getAnnotation(EntityConfig.class);
 		if (this.config == null) {
 			throw new RuntimeException("The handler was not configured properly.");
 		}
