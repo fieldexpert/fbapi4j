@@ -1,14 +1,11 @@
 package com.fieldexpert.fbapi4j;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.fieldexpert.fbapi4j.common.Util;
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
-import com.fieldexpert.fbapi4j.dispatch.Request;
-import com.fieldexpert.fbapi4j.dispatch.Response;
 
+@EntityConfig(element = "person", list = Fbapi4j.LIST_PEOPLE, single = Fbapi4j.VIEW_PERSON, id = Fbapi4j.IX_PERSON, name = Fbapi4j.S_PERSON)
 class PersonHandler extends AbstractHandler<Person> {
 
 	PersonHandler(Dispatch dispatch, Util util, String token) {
@@ -20,26 +17,8 @@ class PersonHandler extends AbstractHandler<Person> {
 		throw new UnsupportedOperationException("Operation is not *currently* supported by fbapi4j.");
 	}
 
-	public List<Person> findAll() {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_PEOPLE, util.map(Fbapi4j.TOKEN, token)));
-		List<Map<String, String>> results = util.data(resp.getDocument(), "person");
-		List<Person> peeps = new ArrayList<Person>();
-		for (Map<String, String> p : results) {
-			Person person = new Person(Integer.parseInt(p.get(Fbapi4j.IX_PERSON)), p.get(Fbapi4j.S_EMAIL), p.get(Fbapi4j.S_FULLNAME), p.get(Fbapi4j.S_PHONE));
-			peeps.add(person);
-		}
-		return peeps;
-	}
-
-	public Person findByName(String name) {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PERSON, util.map(Fbapi4j.TOKEN, token, Fbapi4j.S_EMAIL, name)));
-		Map<String, String> p = util.data(resp.getDocument(), "person").get(0);
-		return new Person(Integer.parseInt(p.get(Fbapi4j.IX_PERSON)), p.get(Fbapi4j.S_EMAIL), p.get(Fbapi4j.S_FULLNAME), p.get(Fbapi4j.S_PHONE));
-	}
-
-	public Person findById(Integer id) {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_PERSON, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_PERSON, id)));
-		Map<String, String> p = util.data(resp.getDocument(), "person").get(0);
-		return new Person(Integer.parseInt(p.get(Fbapi4j.IX_PERSON)), p.get(Fbapi4j.S_EMAIL), p.get(Fbapi4j.S_FULLNAME), p.get(Fbapi4j.S_PHONE));
+	@Override
+	Person build(Map<String, String> data) {
+		return new Person(Integer.parseInt(data.get(Fbapi4j.IX_PERSON)), data.get(Fbapi4j.S_EMAIL), data.get(Fbapi4j.S_FULLNAME), data.get(Fbapi4j.S_PHONE));
 	}
 }

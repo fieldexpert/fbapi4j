@@ -17,12 +17,19 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
+@EntityConfig(element = "case", list = Fbapi4j.QUERY, single = Fbapi4j.QUERY, id = Fbapi4j.IX_BUG)
 class CaseHandler extends AbstractHandler<Case> {
 
 	private static final String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
 
 	CaseHandler(Dispatch dispatch, Util util, String token) {
 		super(dispatch, util, token);
+	}
+
+	@Override
+	Case build(Map<String, String> data) {
+		// TODO
+		return null;
 	}
 
 	private Map<String, Object> events(Case c) {

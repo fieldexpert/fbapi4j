@@ -12,10 +12,20 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
+@EntityConfig(element = "area", list = Fbapi4j.LIST_AREAS, single = Fbapi4j.VIEW_AREA, id = Fbapi4j.IX_AREA, name = Fbapi4j.S_AREA)
 class AreaHandler extends AbstractHandler<Area> {
 
 	AreaHandler(Dispatch dispatch, Util util, String token) {
 		super(dispatch, util, token);
+	}
+
+	@Override
+	Area build(Map<String, String> data) {
+		Integer owner = null;
+		if (data.containsKey(Fbapi4j.IX_PERSON_OWNER)) {
+			owner = Integer.parseInt(data.get(Fbapi4j.IX_PERSON_OWNER));
+		}
+		return new Area(Integer.parseInt(data.get(Fbapi4j.IX_AREA)), data.get(Fbapi4j.S_AREA), owner, Integer.parseInt(data.get(Fbapi4j.IX_PROJECT)));
 	}
 
 	public void create(Area area) {
@@ -27,26 +37,13 @@ class AreaHandler extends AbstractHandler<Area> {
 		area.setId(id);
 	}
 
-	public List<Area> findAll() {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.LIST_AREAS, util.map(Fbapi4j.TOKEN, token)));
-		return buildAreas(resp);
-	}
-
 	private List<Area> buildAreas(Response resp) {
 		List<Map<String, String>> list = util.data(resp.getDocument(), "area");
 		List<Area> areas = new ArrayList<Area>();
 		for (Map<String, String> map : list) {
-			Integer owner = null;
-			if (map.containsKey(Fbapi4j.IX_PERSON_OWNER)) {
-				owner = Integer.parseInt(map.get(Fbapi4j.IX_PERSON_OWNER));
-			}
-			areas.add(new Area(Integer.parseInt(map.get(Fbapi4j.IX_AREA)), map.get(Fbapi4j.S_AREA), owner, Integer.parseInt(map.get(Fbapi4j.IX_PROJECT))));
+			areas.add(build(map));
 		}
 		return areas;
-	}
-
-	public List<Area> getByProject(Project project) {
-		return getByProject(project.getId());
 	}
 
 	public List<Area> getByProject(Integer project) {
@@ -54,16 +51,7 @@ class AreaHandler extends AbstractHandler<Area> {
 		return buildAreas(resp);
 	}
 
-	public Area findById(Integer id) {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.VIEW_AREA, util.map(Fbapi4j.TOKEN, token, Fbapi4j.IX_AREA, id)));
-		Map<String, String> map = util.data(resp.getDocument(), "area").get(0);
-		Integer owner = null;
-		if (map.containsKey(Fbapi4j.IX_PERSON_OWNER)) {
-			owner = Integer.parseInt(map.get(Fbapi4j.IX_PERSON_OWNER));
-		}
-		return new Area(Integer.parseInt(map.get(Fbapi4j.IX_AREA)), map.get(Fbapi4j.S_AREA), owner, Integer.parseInt(map.get(Fbapi4j.IX_PROJECT)));
-	}
-
+	@Override
 	public Area findByName(String name) {
 		throw new Fbapi4jException("Not supported, since Area names do not need to be unique.");
 	}
