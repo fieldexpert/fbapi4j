@@ -1,5 +1,6 @@
 package com.fieldexpert.fbapi4j;
 
+@EntityConfig(element = "area", list = Fbapi4j.LIST_AREAS, single = Fbapi4j.VIEW_AREA, id = Fbapi4j.IX_AREA, name = Fbapi4j.S_AREA)
 public class Area extends Entity {
 
 	Area(Integer id, String name, Integer owner, Integer project) {

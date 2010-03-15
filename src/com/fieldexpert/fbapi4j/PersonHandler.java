@@ -5,7 +5,6 @@ import java.util.Map;
 import com.fieldexpert.fbapi4j.common.Util;
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 
-@EntityConfig(element = "person", list = Fbapi4j.LIST_PEOPLE, single = Fbapi4j.VIEW_PERSON, id = Fbapi4j.IX_PERSON, name = Fbapi4j.S_PERSON)
 class PersonHandler extends AbstractHandler<Person> {
 
 	PersonHandler(Dispatch dispatch, Util util, String token) {

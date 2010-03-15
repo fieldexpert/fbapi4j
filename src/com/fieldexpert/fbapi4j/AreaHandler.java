@@ -12,7 +12,6 @@ import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 import com.fieldexpert.fbapi4j.dispatch.Request;
 import com.fieldexpert.fbapi4j.dispatch.Response;
 
-@EntityConfig(element = "area", list = Fbapi4j.LIST_AREAS, single = Fbapi4j.VIEW_AREA, id = Fbapi4j.IX_AREA, name = Fbapi4j.S_AREA)
 class AreaHandler extends AbstractHandler<Area> {
 
 	AreaHandler(Dispatch dispatch, Util util, String token) {

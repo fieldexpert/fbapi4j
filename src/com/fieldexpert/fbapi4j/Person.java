@@ -1,5 +1,6 @@
 package com.fieldexpert.fbapi4j;
 
+@EntityConfig(element = "person", list = Fbapi4j.LIST_PEOPLE, single = Fbapi4j.VIEW_PERSON, id = Fbapi4j.IX_PERSON, name = Fbapi4j.S_PERSON)
 public class Person extends Entity {
 
 	Person(Integer id, String email, String fullname, String phone) {

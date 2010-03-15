@@ -3,6 +3,7 @@ package com.fieldexpert.fbapi4j;
 import java.util.List;
 import java.util.Map;
 
+@EntityConfig(element = "project", list = Fbapi4j.LIST_PROJECTS, single = Fbapi4j.VIEW_PROJECT, id = Fbapi4j.IX_PROJECT, name = Fbapi4j.S_PROJECT)
 public class Project extends Entity {
 
 	public Project(String name) {

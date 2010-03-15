@@ -17,6 +17,7 @@ import com.fieldexpert.fbapi4j.common.Assert;
 import com.fieldexpert.fbapi4j.common.Attachment;
 import com.fieldexpert.fbapi4j.common.DateFormatUtil;
 
+@EntityConfig(element = "case", list = Fbapi4j.QUERY, single = Fbapi4j.QUERY, id = Fbapi4j.IX_BUG)
 public class Case extends Entity {
 	private List<Attachment> attachments;
 	private List<Event> events;

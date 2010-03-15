@@ -1,5 +1,6 @@
 package com.fieldexpert.fbapi4j;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,19 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 	protected Util util;
 	protected String token;
 	private EntityConfig config;
+
+	protected AbstractHandler(Dispatch dispatch, Util util, String token) {
+		this.dispatch = dispatch;
+		this.util = util;
+		this.token = token;
+
+		@SuppressWarnings("unchecked")
+		Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		this.config = clazz.getAnnotation(EntityConfig.class);
+		if (this.config == null) {
+			throw new RuntimeException("The handler was not configured properly.");
+		}
+	}
 
 	abstract T build(Map<String, String> data);
 
@@ -37,16 +51,6 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 		Response resp = dispatch.invoke(new Request(config.single(), util.map(Fbapi4j.TOKEN, token, config.name(), name)));
 		Map<String, String> map = util.data(resp.getDocument(), config.element()).get(0);
 		return build(map);
-	}
-
-	protected AbstractHandler(Dispatch dispatch, Util util, String token) {
-		this.dispatch = dispatch;
-		this.util = util;
-		this.token = token;
-		this.config = getClass().getAnnotation(EntityConfig.class);
-		if (this.config == null) {
-			throw new RuntimeException("The handler was not configured properly.");
-		}
 	}
 
 }

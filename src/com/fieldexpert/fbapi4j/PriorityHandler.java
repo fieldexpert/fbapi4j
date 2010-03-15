@@ -5,7 +5,6 @@ import java.util.Map;
 import com.fieldexpert.fbapi4j.common.Util;
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 
-@EntityConfig(element = "priority", list = Fbapi4j.LIST_PRIORITIES, single = Fbapi4j.VIEW_PRIORITY, id = Fbapi4j.IX_PRIORITY, name = Fbapi4j.S_PRIORITY)
 class PriorityHandler extends AbstractHandler<Priority> {
 
 	PriorityHandler(Dispatch dispatch, Util util, String token) {
