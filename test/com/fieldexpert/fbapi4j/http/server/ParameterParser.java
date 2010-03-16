@@ -1,6 +1,6 @@
 package com.fieldexpert.fbapi4j.http.server;
 
-import static com.fieldexpert.fbapi4j.http.server.IOUtils.string;
+import static com.fieldexpert.fbapi4j.common.IOUtils.string;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

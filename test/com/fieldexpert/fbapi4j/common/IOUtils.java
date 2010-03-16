@@ -1,4 +1,4 @@
-package com.fieldexpert.fbapi4j.http.server;
+package com.fieldexpert.fbapi4j.common;
 
 import java.io.File;
 import java.io.FileInputStream;
