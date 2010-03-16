@@ -7,6 +7,10 @@ import java.util.List;
 
 public class StringUtil {
 
+	public static String collectionToCommaDelimitedString(Collection<?> col) {
+		return collectionToDelimitedString(col, ",");
+	}
+
 	public static String collectionToDelimitedString(Collection<?> col, String del) {
 		if (col == null || col.isEmpty()) {
 			return "";
@@ -20,10 +24,6 @@ public class StringUtil {
 			}
 		}
 		return sb.toString();
-	}
-
-	public static String collectionToCommaDelimitedString(Collection<?> col) {
-		return collectionToDelimitedString(col, ",");
 	}
 
 	public static List<String> commaDelimitedStringToSet(String str) {
