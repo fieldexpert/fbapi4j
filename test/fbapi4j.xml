@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fbapi4j>
+<fbapi4j date="now">
 	<api>39030202</api>
 </fbapi4j>
