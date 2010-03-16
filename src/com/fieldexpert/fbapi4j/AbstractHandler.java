@@ -25,7 +25,7 @@ abstract class AbstractHandler<T extends Entity> implements Handler<T> {
 		Class<T> entity = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		this.config = entity.getAnnotation(EntityConfig.class);
 		if (this.config == null) {
-			throw new RuntimeException("The handler was not configured properly.");
+			throw new RuntimeException("The entity is missing the required annotation @EntityConfig");
 		}
 	}
 
