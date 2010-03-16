@@ -4,9 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-// TODO Improve?
 public class DateFormatUtil {
-	private static final String FB_DATE = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	public static final String FB_DATE = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
 	private static DateFormat getParser() {
 		return new SimpleDateFormat(FB_DATE);
