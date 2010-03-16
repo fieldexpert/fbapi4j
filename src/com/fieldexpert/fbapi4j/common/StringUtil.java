@@ -26,7 +26,7 @@ public class StringUtil {
 		return sb.toString();
 	}
 
-	public static List<String> commaDelimitedStringToSet(String str) {
+	public static List<String> commaDelimitedStringToList(String str) {
 		if (str == null) {
 			return new ArrayList<String>(0);
 		}

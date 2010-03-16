@@ -53,7 +53,7 @@ class CaseHandler extends AbstractHandler<Case> {
 
 	private void updateCase(Case c, Map<String, String> data) {
 		c.setNumber(Integer.parseInt(data.get(Fbapi4j.IX_BUG)));
-		List<String> allowed = StringUtil.commaDelimitedStringToSet(data.get(Fbapi4j.OPERATIONS));
+		List<String> allowed = StringUtil.commaDelimitedStringToList(data.get(Fbapi4j.OPERATIONS));
 		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
 		for (String op : allowed) {
 			operations.add(AllowedOperation.valueOf(op.toUpperCase()));
