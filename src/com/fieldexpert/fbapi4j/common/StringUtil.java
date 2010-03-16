@@ -27,7 +27,7 @@ public class StringUtil {
 	}
 
 	public static List<String> commaDelimitedStringToList(String str) {
-		if (str == null) {
+		if (str == null || str.length() == 0) {
 			return new ArrayList<String>(0);
 		}
 		List<String> result = new ArrayList<String>();

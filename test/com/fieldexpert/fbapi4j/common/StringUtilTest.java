@@ -9,10 +9,18 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fieldexpert.fbapi4j.common.StringUtil;
-
 public class StringUtilTest {
 	private List<String> list;
+
+	@Test
+	public void matchList() {
+		assertEquals(list, StringUtil.commaDelimitedStringToList("foo,bar,baz,quux"));
+	}
+
+	@Test
+	public void matchEmptyList() {
+		assertEquals(0, StringUtil.commaDelimitedStringToList("").size());
+	}
 
 	@Test
 	public void match() {
