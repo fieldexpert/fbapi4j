@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class IOUtils {
+public class IOUtil {
 
 	public static String string(File file) throws java.io.IOException {
 		return string(new FileInputStream(file));

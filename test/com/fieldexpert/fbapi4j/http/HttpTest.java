@@ -1,6 +1,6 @@
 package com.fieldexpert.fbapi4j.http;
 
-import static com.fieldexpert.fbapi4j.common.IOUtils.string;
+import static com.fieldexpert.fbapi4j.common.IOUtil.string;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
