@@ -22,6 +22,7 @@
 
 		<!-- Testing -->
 		<dependency org="junit" name="junit" rev="4.7" conf="test" transitive="false" />
+		<dependency org="org.easymock" name="easymock" rev="2.5.2" />
 
 	</dependencies>
 
