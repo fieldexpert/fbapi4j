@@ -65,7 +65,7 @@ public class HttpTest {
 
 	@Test
 	public void attachments() throws IOException {
-		List<Attachment> attachments = asList(new Attachment("foo.txt", "text/plain", "This is my test file."), new Attachment(new File("test/fogbugz.xml")));
+		List<Attachment> attachments = asList(new Attachment("foo.txt", "text/plain", "This is my test file."), new Attachment(new File("test/fbapi4j.xml")));
 		InputStream is = Http.post(url, params, attachments);
 
 		Map<String, String> returnedParams = params(string(is));
