@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
+import com.fieldexpert.fbapi4j.dispatch.HttpDispatch;
 
 public final class Configuration {
 
@@ -32,7 +33,7 @@ public final class Configuration {
 
 	public Dispatch buildDispatch() {
 		verify(ENDPOINT, EMAIL, PASSWORD);
-		return new Dispatch(this);
+		return new HttpDispatch(this);
 	}
 
 	/**
