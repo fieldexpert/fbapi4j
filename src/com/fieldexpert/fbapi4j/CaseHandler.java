@@ -25,14 +25,23 @@ class CaseHandler extends AbstractHandler<Case> {
 		super(dispatch, util, token);
 	}
 
+	private void allowed(Case c, AllowedOperation operation) {
+		if (!c.getAllowedOperations().contains(operation)) {
+			throw new Fbapi4jException("Operation " + operation.toString() + " is not allowed. [Allowed operations: " + c.getAllowedOperations() + "].");
+		}
+	}
+
 	@Override
 	Case build(Map<String, String> data) {
 		// TODO
 		return null;
 	}
 
-	private Map<String, Object> events(Case c) {
-		return new HashMap<String, Object>(c.getFields());
+	public void close(Case bug) {
+		Assert.notNull(token);
+		allowed(bug, AllowedOperation.CLOSE);
+		Response resp = send(Fbapi4j.CLOSE, util.map(Fbapi4j.IX_BUG, bug.getId()));
+		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
 	public void create(Case t) {
@@ -51,20 +60,15 @@ class CaseHandler extends AbstractHandler<Case> {
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
-	private void updateCase(Case c, Map<String, String> data) {
-		c.setId(Integer.parseInt(data.get(Fbapi4j.IX_BUG)));
-		List<String> allowed = StringUtil.commaDelimitedStringToList(data.get(Fbapi4j.OPERATIONS));
-		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
-		for (String op : allowed) {
-			operations.add(AllowedOperation.valueOf(op.toUpperCase()));
-		}
-		c.setAllowedOperations(operations);
+	public void edit(Case bug) {
+		Assert.notNull(bug.getId());
+		allowed(bug, AllowedOperation.EDIT);
+		Response resp = send(Fbapi4j.EDIT, events(bug));
+		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
-	public List<Case> query(String... criterion) {
-		String q = collectionToCommaDelimitedString(asList(criterion));
-		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.COLS, cols, Fbapi4j.QUERY, q)));
-		return new CaseBuilder(util, dispatch.getEndpoint(), token).list(resp.getDocument());
+	private Map<String, Object> events(Case c) {
+		return new HashMap<String, Object>(c.getFields());
 	}
 
 	public List<Case> findAll() {
@@ -74,6 +78,37 @@ class CaseHandler extends AbstractHandler<Case> {
 	public Case findById(Integer id) {
 		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, cols)));
 		return new CaseBuilder(util, dispatch.getEndpoint(), token).singleResult(resp.getDocument());
+	}
+
+	public Case findByName(String name) {
+		throw new UnsupportedOperationException("Not *yet* supported");
+	}
+
+	public List<Case> query(String... criterion) {
+		String q = collectionToCommaDelimitedString(asList(criterion));
+		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.COLS, cols, Fbapi4j.QUERY, q)));
+		return new CaseBuilder(util, dispatch.getEndpoint(), token).list(resp.getDocument());
+	}
+
+	public void reactivate(Case bug) {
+		Assert.notNull(bug.getId());
+		allowed(bug, AllowedOperation.REACTIVATE);
+		Response resp = send(Fbapi4j.REACTIVATE, events(bug));
+		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+	}
+
+	public void reopen(Case bug) {
+		Assert.notNull(bug.getId());
+		allowed(bug, AllowedOperation.REOPEN);
+		Response resp = send(Fbapi4j.REOPEN, events(bug));
+		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+	}
+
+	public void resolve(Case bug) {
+		Assert.notNull(bug.getId());
+		allowed(bug, AllowedOperation.RESOLVE);
+		Response resp = send(Fbapi4j.RESOLVE, events(bug));
+		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
 	void scout(Case bug) {
@@ -87,24 +122,6 @@ class CaseHandler extends AbstractHandler<Case> {
 		} else {
 			send(Fbapi4j.NEW, parameters, attachments);
 		}
-	}
-
-	public void resolve(Case bug) {
-		Assert.notNull(bug.getId());
-		Response resp = send(Fbapi4j.RESOLVE, events(bug));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
-	}
-
-	public void reopen(Case bug) {
-		Assert.notNull(bug.getId());
-		Response resp = send(Fbapi4j.REOPEN, events(bug));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
-	}
-
-	public void reactivate(Case bug) {
-		Assert.notNull(bug.getId());
-		Response resp = send(Fbapi4j.REACTIVATE, events(bug));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
 	private Response send(String command, Map<String, Object> parameters) {
@@ -121,23 +138,13 @@ class CaseHandler extends AbstractHandler<Case> {
 		return dispatch.invoke(request);
 	}
 
-	public void edit(Case bug) {
-		Assert.notNull(bug.getId());
-		// TODO Make sure this case is editable
-		Response resp = send(Fbapi4j.EDIT, events(bug));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
-	}
-
-	public Case findByName(String name) {
-		throw new UnsupportedOperationException("Not *yet* supported");
-	}
-
-	public void close(Case bug) {
-		Assert.notNull(token);
-		if (!bug.getAllowedOperations().contains(AllowedOperation.CLOSE)) {
-			throw new Fbapi4jException("This bug cannot be closed.");
+	private void updateCase(Case c, Map<String, String> data) {
+		c.setId(Integer.parseInt(data.get(Fbapi4j.IX_BUG)));
+		List<String> allowed = StringUtil.commaDelimitedStringToList(data.get(Fbapi4j.OPERATIONS));
+		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
+		for (String op : allowed) {
+			operations.add(AllowedOperation.valueOf(op.toUpperCase()));
 		}
-		Response resp = send(Fbapi4j.CLOSE, util.map(Fbapi4j.IX_BUG, bug.getId()));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+		c.setAllowedOperations(operations);
 	}
 }

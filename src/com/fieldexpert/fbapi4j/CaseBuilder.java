@@ -2,14 +2,17 @@ package com.fieldexpert.fbapi4j;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.fieldexpert.fbapi4j.common.DateFormatUtil;
+import com.fieldexpert.fbapi4j.common.StringUtil;
 import com.fieldexpert.fbapi4j.common.Util;
 
 class CaseBuilder {
@@ -44,6 +47,14 @@ class CaseBuilder {
 
 		List<Event> events = events(doc, c);
 		c.addEvents(events);
+
+		// TODO This is repeated in CaseHandler, which is gross.
+		List<String> allowed = StringUtil.commaDelimitedStringToList(caseMap.get(Fbapi4j.OPERATIONS));
+		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
+		for (String op : allowed) {
+			operations.add(AllowedOperation.valueOf(op.toUpperCase()));
+		}
+		c.setAllowedOperations(operations);
 		return c;
 	}
 
