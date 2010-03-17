@@ -23,28 +23,22 @@ public class Case extends Entity {
 	private List<Event> events;
 	private Set<AllowedOperation> allowedOperations;
 
-	// TODO refactor getNumber --> getId, etc...  number --> id generally (we are the abstraction)
-
 	public Case(String project, String area, String title, String description) {
 		this(null, project, area, title, description);
 	}
 
-	Case(Integer number, String project, String area, String title, String description) {
-		this(number, project, area, title, description, new ArrayList<Event>());
+	Case(Integer id, String project, String area, String title, String description) {
+		this(id, project, area, title, description, new ArrayList<Event>());
 	}
 
-	Case(Integer number, String project, String area, String title, String description, List<Event> events) {
+	Case(Integer id, String project, String area, String title, String description, List<Event> events) {
 		fields.put(Fbapi4j.S_PROJECT, project);
 		fields.put(Fbapi4j.S_AREA, area);
 		fields.put(Fbapi4j.S_TITLE, title);
 		fields.put(Fbapi4j.S_EVENT, description);
-		fields.put(Fbapi4j.IX_BUG, number);
+		fields.put(Fbapi4j.IX_BUG, id);
 		this.attachments = new ArrayList<Attachment>();
 		this.events = events;
-	}
-
-	public Integer getId() {
-		return getNumber();
 	}
 
 	public Case attach(Attachment attachment) {
@@ -81,11 +75,11 @@ public class Case extends Entity {
 		return attach(new Attachment(filename, type, content.getBytes(Charset.forName("UTF-8"))));
 	}
 
-	void setNumber(Integer number) {
-		fields.put(Fbapi4j.IX_BUG, number);
+	void setId(Integer id) {
+		fields.put(Fbapi4j.IX_BUG, id);
 	}
 
-	public Integer getNumber() {
+	public Integer getId() {
 		return (Integer) fields.get(Fbapi4j.IX_BUG);
 	}
 
@@ -118,10 +112,10 @@ public class Case extends Entity {
 	}
 
 	public void setParent(Case parent) {
-		if (parent.getNumber() == null) {
+		if (parent.getId() == null) {
 			throw new Fbapi4jException("The parent case must be persisted first");
 		}
-		fields.put(Fbapi4j.IX_BUG_PARENT, parent.getNumber());
+		fields.put(Fbapi4j.IX_BUG_PARENT, parent.getId());
 	}
 
 	public void setTags(String... tags) {

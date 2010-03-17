@@ -52,7 +52,7 @@ class CaseHandler extends AbstractHandler<Case> {
 	}
 
 	private void updateCase(Case c, Map<String, String> data) {
-		c.setNumber(Integer.parseInt(data.get(Fbapi4j.IX_BUG)));
+		c.setId(Integer.parseInt(data.get(Fbapi4j.IX_BUG)));
 		List<String> allowed = StringUtil.commaDelimitedStringToList(data.get(Fbapi4j.OPERATIONS));
 		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();
 		for (String op : allowed) {
@@ -90,19 +90,19 @@ class CaseHandler extends AbstractHandler<Case> {
 	}
 
 	public void resolve(Case bug) {
-		Assert.notNull(bug.getNumber());
+		Assert.notNull(bug.getId());
 		Response resp = send(Fbapi4j.RESOLVE, events(bug));
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
 	public void reopen(Case bug) {
-		Assert.notNull(bug.getNumber());
+		Assert.notNull(bug.getId());
 		Response resp = send(Fbapi4j.REOPEN, events(bug));
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
 	public void reactivate(Case bug) {
-		Assert.notNull(bug.getNumber());
+		Assert.notNull(bug.getId());
 		Response resp = send(Fbapi4j.REACTIVATE, events(bug));
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
@@ -122,7 +122,7 @@ class CaseHandler extends AbstractHandler<Case> {
 	}
 
 	public void edit(Case bug) {
-		Assert.notNull(bug.getNumber());
+		Assert.notNull(bug.getId());
 		// TODO Make sure this case is editable
 		Response resp = send(Fbapi4j.EDIT, events(bug));
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
@@ -137,7 +137,7 @@ class CaseHandler extends AbstractHandler<Case> {
 		if (!bug.getAllowedOperations().contains(AllowedOperation.CLOSE)) {
 			throw new Fbapi4jException("This bug cannot be closed.");
 		}
-		Response resp = send(Fbapi4j.CLOSE, util.map(Fbapi4j.IX_BUG, bug.getNumber()));
+		Response resp = send(Fbapi4j.CLOSE, util.map(Fbapi4j.IX_BUG, bug.getId()));
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 }
