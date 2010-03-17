@@ -1,16 +1,14 @@
-package com.fieldexpert.fbapi4j;
+package com.fieldexpert.fbapi4j.demo;
+
+import com.fieldexpert.fbapi4j.Area;
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Project;
+import com.fieldexpert.fbapi4j.Session;
 
 public class AreaDemo {
 
 	public static void main(String[] args) throws Exception {
-		String email = args[0];
-		String password = args[1];
-
-		Configuration conf = new Configuration();
-		conf.setProperty("endpoint", "https://fieldexpert.fogbugz.com/");
-		conf.setProperty("email", email);
-		conf.setProperty("password", password);
-
+		Configuration conf = new Configuration().configure();
 		Session session = conf.getSession();
 
 		for (Area area : session.findAll(Area.class)) {
@@ -19,8 +17,8 @@ public class AreaDemo {
 
 		Project project = session.get(Project.class, 8); // 8 = FX Internal
 		Area area = new Area("Nathan's Area 7", project);
-		System.out.println(area.getId());
 		session.create(area);
+		System.out.println(area.getId());
 		session.close();
 
 	}

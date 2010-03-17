@@ -1,19 +1,16 @@
-package com.fieldexpert.fbapi4j;
+package com.fieldexpert.fbapi4j.demo;
 
 import java.io.File;
 import java.util.Date;
 
-public class SessionDemo {
+import com.fieldexpert.fbapi4j.Case;
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Session;
+
+public class CaseDemo {
 
 	public static void main(String[] args) throws Exception {
-		String email = args[0];
-		String password = args[1];
-
-		Configuration conf = new Configuration();
-		conf.setProperty("endpoint", "https://fieldexpert.fogbugz.com/");
-		conf.setProperty("email", email);
-		conf.setProperty("password", password);
-
+		Configuration conf = new Configuration().configure();
 		Session session = conf.getSession();
 
 		Case bug1 = new Case("Internal Field Expert", "Misc", "Test Case Title", "Case Event 20").attach("build.xml", "text/xml", "My Custom Build file!").attach(new File("test/fbapi4j.xml"));

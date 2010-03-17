@@ -1,16 +1,13 @@
-package com.fieldexpert.fbapi4j;
+package com.fieldexpert.fbapi4j.demo;
+
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Person;
+import com.fieldexpert.fbapi4j.Session;
 
 public class PeopleDemo {
 
 	public static void main(String[] args) {
-		String email = args[0];
-		String password = args[1];
-
 		Configuration conf = new Configuration().configure();
-		conf.setProperty("endpoint", "https://fieldexpert.fogbugz.com/");
-		conf.setProperty("email", email);
-		conf.setProperty("password", password);
-
 		Session session = conf.getSession();
 
 		for (Person p : session.findAll(Person.class)) {

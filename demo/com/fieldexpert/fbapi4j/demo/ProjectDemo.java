@@ -1,16 +1,13 @@
-package com.fieldexpert.fbapi4j;
+package com.fieldexpert.fbapi4j.demo;
+
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Project;
+import com.fieldexpert.fbapi4j.Session;
 
 public class ProjectDemo {
 
 	public static void main(String[] args) throws Exception {
-		String email = args[0];
-		String password = args[1];
-
-		Configuration conf = new Configuration();
-		conf.setProperty("endpoint", "https://fieldexpert.fogbugz.com/");
-		conf.setProperty("email", email);
-		conf.setProperty("password", password);
-
+		Configuration conf = new Configuration().configure();
 		Session session = conf.getSession();
 
 		//session.create(new Project("Nathan Test Project"));

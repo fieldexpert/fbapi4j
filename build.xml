@@ -1,13 +1,15 @@
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="fbapi4j" default="default">
 
 	<property name="version" value="1.0" />
-	
+
 	<property name="src.dir" location="${basedir}/src" />
 	<property name="test.src.dir" location="${basedir}/test" />
-	<property name="lib.dir" location="${basedir}/lib" />	
+	<property name="demo.src.dir" location="${basedir}/demo" />
+	<property name="lib.dir" location="${basedir}/lib" />
 	<property name="build.dir" location="${basedir}/bin" />
 	<property name="classes.dir" location="${build.dir}/classes" />
 	<property name="test.classes.dir" location="${build.dir}/test-classes" />
+	<property name="demo.classes.dir" location="${build.dir}/demo-classes" />
 	<property name="reports.dir" location="${build.dir}/reports" />
 	<property name="test.reports.dir" location="${reports.dir}/tests" />
 	<property name="dist.dir" location="${basedir}/dist" />
@@ -32,7 +34,12 @@
 		<pathelement path="${test.classes.dir}" />
 		<path refid="classpath-compile" />
 		<path refid="classpath-ivy-test" />
-	</path>	
+	</path>
+
+	<path id="classpath-demo">
+		<pathelement path="${demo.classes.dir}" />
+		<path refid="classpath-runtime" />
+	</path>
 
 	<!-- ================================= 
           target: default       
@@ -42,7 +49,7 @@
 	<!-- ================================= 
           target: init              
          ================================= -->
-	<target name="init" depends="init-src, init-test, init-report" description="Build the empty directories for building the project" />
+	<target name="init" depends="init-src, init-test, init-demo, init-report" description="Build the empty directories for building the project" />
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: init-src
@@ -64,22 +71,30 @@
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - - 
+          target: init-demo
+         - - - - - - - - - - - - - - - - - -->
+	<target name="init-demo" description="Build the empty directories for executing the demos">
+		<mkdir dir="${demo.src.dir}" />
+		<mkdir dir="${demo.classes.dir}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
 	      target: init-report                      
 	     - - - - - - - - - - - - - - - - - -->
 	<target name="init-report" description="Build the empty directories for reporting on the project">
 		<mkdir dir="${reports.dir}" />
 		<mkdir dir="${test.reports.dir}" />
-    </target>
+	</target>
 
 	<!-- ================================= 
           target: build
          ================================= -->
-	<target name="build" depends="init, compile, copy-resources" description="Compile source and tests, copy raw data from source folders to build folders" />	
+	<target name="build" depends="init, compile, copy-resources" description="Compile source and tests, copy raw data from source folders to build folders" />
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: compile
          - - - - - - - - - - - - - - - - - -->
-	<target name="compile" depends="fetch-dependencies, compile-src, compile-test" description="Compile the java and test source" />
+	<target name="compile" depends="fetch-dependencies, compile-src, compile-test, compile-demo" description="Compile the java and test source" />
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: fetch-dependencies
@@ -111,9 +126,19 @@
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - - 
+          target: compile-demo
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile-demo" depends="compile-src" description="Compile the demo source">
+		<javac destdir="${demo.classes.dir}" target="1.5" debug="true">
+			<src path="${demo.src.dir}" />
+			<classpath refid="classpath-demo" />
+		</javac>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
           target: copy-resources
          - - - - - - - - - - - - - - - - - -->
-	<target name="copy-resources" depends="copy-resources-src, copy-resources-test" description="Copy resources from the source to the build folders" />
+	<target name="copy-resources" depends="copy-resources-src, copy-resources-test, copy-resources-demo" description="Copy resources from the source to the build folders" />
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: copy-resources-src
@@ -132,6 +157,17 @@
 	<target name="copy-resources-test" depends="compile-test" description="Copy test resources">
 		<copy todir="${test.classes.dir}">
 			<fileset dir="${test.src.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: copy-resources-demo
+         - - - - - - - - - - - - - - - - - -->
+	<target name="copy-resources-demo" depends="compile-demo" description="Copy demo resources">
+		<copy todir="${demo.classes.dir}">
+			<fileset dir="${demo.src.dir}">
 				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
@@ -160,11 +196,26 @@
 
 		<delete dir="${instrumented.classes.dir}" />
 	</target>
-	
+
+	<!-- ================================= 
+          target: demo
+         ================================= -->
+	<target name="demo" depends="build, run-demos" description="Run all the demo code" />
+
+
+	<!-- ================================= 
+          target: run-demos
+         ================================= -->
+	<target name="run-demos" depends="build">
+		<java >
+			
+		</java>
+	</target>
+
 	<!-- ================================= 
           target: report
          ================================= -->
-    <target name="report" depends="test" description="Run the source code reports" />
+	<target name="report" depends="test" description="Run the source code reports" />
 
 	<!-- ================================= 
       target: dist
@@ -178,8 +229,8 @@
 		<taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="lib/jarjar-1.0.jar" />
 
 		<jarjar jarfile="${dist.dir}/${ant.project.name}.jar">
-        	<fileset dir="${classes.dir}" />
-        	<zipfileset src="${lib.dir}/mime-util-2.1.jar" />
+			<fileset dir="${classes.dir}" />
+			<zipfileset src="${lib.dir}/mime-util-2.1.jar" />
 			<zipfileset src="${lib.dir}/slf4j-api-1.5.10.jar" />
 			<zipfileset src="${lib.dir}/slf4j-nop-1.5.10.jar" />
 			<rule pattern="org.slf4j.**" result="com.fieldexpert.fbapi4j.slf4j.@1" />
