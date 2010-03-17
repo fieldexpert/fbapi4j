@@ -51,7 +51,10 @@ class MultiPartOutputStream {
 	}
 
 	void write(String name, String filename, String type, InputStream is) throws IOException {
-		// TODO: Check nulls!
+		Assert.notNull(name);
+		Assert.notNull(filename);
+		Assert.notNull(type);
+		Assert.notNull(is);
 
 		writeBoundary();
 
