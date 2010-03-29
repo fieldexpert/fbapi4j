@@ -100,13 +100,11 @@ public final class Configuration {
 
 	public String getEmail() {
 		verify(EMAIL);
-
 		return getProperty(EMAIL);
 	}
 
 	public URL getEndpoint() {
 		verify(ENDPOINT);
-
 		URL url = null;
 		try {
 			url = new URL(getProperty(ENDPOINT));
@@ -118,7 +116,6 @@ public final class Configuration {
 
 	public String getPassword() {
 		verify(PASSWORD);
-
 		return getProperty(PASSWORD);
 	}
 
@@ -138,7 +135,6 @@ public final class Configuration {
 
 	public URL getUrl() {
 		verify(PATH);
-
 		URL url = null;
 		try {
 			url = new URL(getEndpoint(), getProperty(PATH));
