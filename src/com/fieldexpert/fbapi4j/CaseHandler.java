@@ -45,23 +45,14 @@ class CaseHandler extends AbstractHandler<Case> {
 
 	public void create(Case t) {
 		Case bug = (Case) t;
-		List<Attachment> attachments = bug.getAttachments();
-		Map<String, Object> parameters = events(bug);
-		Response resp;
-
-		if (attachments == null) {
-			resp = send(Fbapi4j.NEW, parameters);
-		} else {
-			resp = send(Fbapi4j.NEW, parameters, attachments);
-		}
-
+		Response resp = send(Fbapi4j.NEW, events(bug), bug.getAttachments());
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
 	public void edit(Case bug) {
 		Assert.notNull(bug.getId());
 		allowed(bug, AllowedOperation.EDIT);
-		Response resp = send(Fbapi4j.EDIT, events(bug));
+		Response resp = send(Fbapi4j.EDIT, events(bug), bug.getAttachments());
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
@@ -128,7 +119,6 @@ class CaseHandler extends AbstractHandler<Case> {
 
 	private Response send(String command, Map<String, Object> parameters, List<Attachment> attachments) {
 		parameters.put(Fbapi4j.TOKEN, token);
-
 		Request request = new Request(command, parameters);
 		if (attachments != null) {
 			request.attach(attachments);
