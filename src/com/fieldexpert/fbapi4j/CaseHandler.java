@@ -38,14 +38,12 @@ class CaseHandler extends AbstractHandler<Case> {
 	}
 
 	public void close(Case bug) {
-		Assert.notNull(token);
 		allowed(bug, AllowedOperation.CLOSE);
 		Response resp = send(Fbapi4j.CLOSE, util.map(Fbapi4j.IX_BUG, bug.getId()));
 		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
 	}
 
 	public void create(Case t) {
-		Assert.notNull(token);
 		Case bug = (Case) t;
 		List<Attachment> attachments = bug.getAttachments();
 		Map<String, Object> parameters = events(bug);
