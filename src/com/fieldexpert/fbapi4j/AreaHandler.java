@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import com.fieldexpert.fbapi4j.common.Util;
@@ -18,7 +19,7 @@ class AreaHandler extends AbstractHandler<Area> {
 	}
 
 	@Override
-	Area build(Map<String, String> data) {
+	Area build(Map<String, String> data, Document doc) {
 		Integer owner = null;
 		if (data.containsKey(Fbapi4j.IX_PERSON_OWNER)) {
 			owner = Integer.parseInt(data.get(Fbapi4j.IX_PERSON_OWNER));

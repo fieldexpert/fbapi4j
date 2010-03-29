@@ -17,7 +17,7 @@ public class Event implements Comparable<Event> {
 	private List<EventAttachment> attachments;
 
 	Event(String id, Case bug, String verb, String description, Date date, String createdBy) {
-		this(id, bug, verb, description, date, createdBy, null);
+		this(id, bug, verb, description, date, createdBy, new ArrayList<EventAttachment>(0));
 	}
 
 	Event(String id, Case bug, String verb, String description, Date date, String createdBy, List<EventAttachment> attachments) {

@@ -3,14 +3,21 @@ package com.fieldexpert.fbapi4j;
 import static com.fieldexpert.fbapi4j.common.StringUtil.collectionToCommaDelimitedString;
 import static java.util.Arrays.asList;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import com.fieldexpert.fbapi4j.common.Assert;
 import com.fieldexpert.fbapi4j.common.Attachment;
+import com.fieldexpert.fbapi4j.common.DateFormatUtil;
 import com.fieldexpert.fbapi4j.common.StringUtil;
 import com.fieldexpert.fbapi4j.common.Util;
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
@@ -32,32 +39,56 @@ class CaseHandler extends AbstractHandler<Case> {
 	}
 
 	@Override
-	Case build(Map<String, String> data) {
-		// TODO
-		return null;
+	Case build(Map<String, String> data, Document doc) {
+		Case c = new Case(Integer.parseInt(data.get(Fbapi4j.IX_BUG)), data.get(Fbapi4j.S_PROJECT), data.get(Fbapi4j.S_AREA), //
+				data.get(Fbapi4j.S_TITLE), data.get(Fbapi4j.S_SCOUT_DESCRIPTION));
+		List<Event> events = events(doc, c);
+		c.addEvents(events);
+		update(c, data);
+		return c;
 	}
 
 	public void close(Case bug) {
 		allowed(bug, AllowedOperation.CLOSE);
-		Response resp = send(Fbapi4j.CLOSE, util.map(Fbapi4j.IX_BUG, bug.getId()));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+		sendAndUpdate(Fbapi4j.CLOSE, bug, util.map(Fbapi4j.IX_BUG, bug.getId()));
 	}
 
-	public void create(Case t) {
-		Case bug = (Case) t;
-		Response resp = send(Fbapi4j.NEW, events(bug), bug.getAttachments());
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+	public void create(Case bug) {
+		sendAndUpdate(Fbapi4j.NEW, bug);
 	}
 
 	public void edit(Case bug) {
 		Assert.notNull(bug.getId());
 		allowed(bug, AllowedOperation.EDIT);
-		Response resp = send(Fbapi4j.EDIT, events(bug), bug.getAttachments());
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+		sendAndUpdate(Fbapi4j.EDIT, bug);
 	}
 
 	private Map<String, Object> events(Case c) {
 		return new HashMap<String, Object>(c.getFields());
+	}
+
+	private List<Event> events(Document doc, Case c) {
+		List<Event> events = new ArrayList<Event>();
+		NodeList nodes = doc.getElementsByTagName("event");
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Element element = (Element) nodes.item(i);
+			Map<String, String> map = util.children(element);
+			try {
+				Event event = new Event(map.get(Fbapi4j.IX_BUG_EVENT), c, map.get(Fbapi4j.S_VERB), //
+						map.get(Fbapi4j.EVN_DESC), DateFormatUtil.parse(map.get(Fbapi4j.DT)), map.get(Fbapi4j.S_PERSON));
+
+				NodeList attachList = element.getElementsByTagName("attachment");
+				for (int j = 0; j < attachList.getLength(); j++) {
+					Map<String, String> attachMap = util.children(attachList.item(j));
+					URL u = new URL(dispatch.getEndpoint(), attachMap.get(Fbapi4j.S_URL).replaceAll("&amp;", "&") + "&token=" + token);
+					event.attach(new EventAttachment(attachMap.get(Fbapi4j.S_FILENAME), u));
+				}
+				events.add(event);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return events;
 	}
 
 	public List<Case> findAll() {
@@ -65,8 +96,7 @@ class CaseHandler extends AbstractHandler<Case> {
 	}
 
 	public Case findById(Integer id) {
-		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, cols)));
-		return new CaseBuilder(util, dispatch.getEndpoint(), token).singleResult(resp.getDocument());
+		return find(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, cols)));
 	}
 
 	public Case findByName(String name) {
@@ -76,45 +106,29 @@ class CaseHandler extends AbstractHandler<Case> {
 	public List<Case> query(String... criterion) {
 		String q = collectionToCommaDelimitedString(asList(criterion));
 		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.COLS, cols, Fbapi4j.QUERY, q)));
-		return new CaseBuilder(util, dispatch.getEndpoint(), token).list(resp.getDocument());
+		return list(resp);
 	}
 
 	public void reactivate(Case bug) {
 		Assert.notNull(bug.getId());
 		allowed(bug, AllowedOperation.REACTIVATE);
-		Response resp = send(Fbapi4j.REACTIVATE, events(bug));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+		sendAndUpdate(Fbapi4j.REACTIVATE, bug);
 	}
 
 	public void reopen(Case bug) {
 		Assert.notNull(bug.getId());
 		allowed(bug, AllowedOperation.REOPEN);
-		Response resp = send(Fbapi4j.REOPEN, events(bug));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+		sendAndUpdate(Fbapi4j.REOPEN, bug);
 	}
 
 	public void resolve(Case bug) {
 		Assert.notNull(bug.getId());
 		allowed(bug, AllowedOperation.RESOLVE);
-		Response resp = send(Fbapi4j.RESOLVE, events(bug));
-		updateCase(bug, util.data(resp.getDocument(), "case").get(0));
+		sendAndUpdate(Fbapi4j.RESOLVE, bug);
 	}
 
 	void scout(Case bug) {
-		Assert.notNull(token);
-		List<Attachment> attachments = bug.getAttachments();
-		Map<String, Object> parameters = events(bug);
-		parameters.put(Fbapi4j.S_SCOUT_DESCRIPTION, bug.getTitle());
-
-		if (attachments == null) {
-			send(Fbapi4j.NEW, parameters);
-		} else {
-			send(Fbapi4j.NEW, parameters, attachments);
-		}
-	}
-
-	private Response send(String command, Map<String, Object> parameters) {
-		return send(command, parameters, null);
+		sendAndUpdate(Fbapi4j.NEW, bug, util.map(Fbapi4j.S_SCOUT_DESCRIPTION, bug.getTitle()));
 	}
 
 	private Response send(String command, Map<String, Object> parameters, List<Attachment> attachments) {
@@ -126,7 +140,20 @@ class CaseHandler extends AbstractHandler<Case> {
 		return dispatch.invoke(request);
 	}
 
-	private void updateCase(Case c, Map<String, String> data) {
+	private Response sendAndUpdate(String command, Case bug) {
+		Response resp = send(command, events(bug), bug.getAttachments());
+		update(bug, util.data(resp.getDocument(), "case").get(0));
+		return resp;
+	}
+
+	private Response sendAndUpdate(String command, Case bug, Map<String, Object> params) {
+		params.putAll(events(bug));
+		Response resp = send(command, params, bug.getAttachments());
+		update(bug, util.data(resp.getDocument(), "case").get(0));
+		return resp;
+	}
+
+	private void update(Case c, Map<String, String> data) {
 		c.setId(Integer.parseInt(data.get(Fbapi4j.IX_BUG)));
 		List<String> allowed = StringUtil.commaDelimitedStringToList(data.get(Fbapi4j.OPERATIONS));
 		Set<AllowedOperation> operations = new HashSet<AllowedOperation>();

@@ -2,6 +2,8 @@ package com.fieldexpert.fbapi4j;
 
 import java.util.Map;
 
+import org.w3c.dom.Document;
+
 import com.fieldexpert.fbapi4j.common.Util;
 import com.fieldexpert.fbapi4j.dispatch.Dispatch;
 
@@ -17,7 +19,7 @@ class PersonHandler extends AbstractHandler<Person> {
 	}
 
 	@Override
-	Person build(Map<String, String> data) {
+	Person build(Map<String, String> data, Document doc) {
 		return new Person(Integer.parseInt(data.get(Fbapi4j.IX_PERSON)), data.get(Fbapi4j.S_EMAIL), data.get(Fbapi4j.S_FULLNAME), data.get(Fbapi4j.S_PHONE));
 	}
 }
