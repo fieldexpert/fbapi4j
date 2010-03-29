@@ -34,6 +34,7 @@ public class CaseDemo {
 		c.setParent(parent);
 		c.setDueDate(new Date());
 		c.setArea("Area 3");
+		//c.attach(new File("test/com/fieldexpert/fbapi4j/CaseTest.java")); // TODO Doesn't currently work
 		c.setAssignedTo("Nathan Bowser");
 		session.edit(c);
 		session.close();
