@@ -8,7 +8,7 @@ public class PeopleDemo {
 
 	public static void main(String[] args) {
 		Configuration conf = new Configuration().configure();
-		Session session = conf.getSession();
+		Session session = conf.buildSession();
 
 		for (Person p : session.findAll(Person.class)) {
 			System.out.println(p.getId() + " -> " + p.getFullname());

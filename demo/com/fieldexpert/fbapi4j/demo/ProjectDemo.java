@@ -8,7 +8,7 @@ public class ProjectDemo {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration().configure();
-		Session session = conf.getSession();
+		Session session = conf.buildSession();
 
 		//session.create(new Project("Nathan Test Project"));
 

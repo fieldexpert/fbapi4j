@@ -10,7 +10,7 @@ public class SessionTest {
 	@Test
 	public void neverConnects() {
 		Configuration config = new Configuration().configure();
-		Session session = config.getSession();
+		Session session = config.buildSession();
 		session.close();
 	}
 

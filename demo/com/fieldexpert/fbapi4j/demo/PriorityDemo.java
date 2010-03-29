@@ -8,7 +8,7 @@ public class PriorityDemo {
 
 	public static void main(String[] args) {
 		Configuration conf = new Configuration().configure();
-		Session session = conf.getSession();
+		Session session = conf.buildSession();
 
 		for (Priority priority : session.findAll(Priority.class)) {
 			System.out.println(priority.getId() + " -> " + priority.getName());

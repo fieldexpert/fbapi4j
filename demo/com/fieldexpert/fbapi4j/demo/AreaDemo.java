@@ -9,7 +9,7 @@ public class AreaDemo {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration().configure();
-		Session session = conf.getSession();
+		Session session = conf.buildSession();
 
 		for (Area area : session.findAll(Area.class)) {
 			System.out.println(area.getId() + " -> " + area.getName() + " -> " + area.getProject().getName());

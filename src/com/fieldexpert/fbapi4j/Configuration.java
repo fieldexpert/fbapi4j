@@ -27,7 +27,7 @@ public final class Configuration {
 		this.properties = configuration.getProperties();
 	}
 
-	public Session getSession() {
+	public Session buildSession() {
 		return new SessionFactory().createSession(this);
 	}
 

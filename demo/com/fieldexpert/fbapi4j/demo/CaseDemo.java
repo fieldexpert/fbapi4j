@@ -11,7 +11,7 @@ public class CaseDemo {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration().configure();
-		Session session = conf.getSession();
+		Session session = conf.buildSession();
 
 		Case bug1 = new Case("Internal Field Expert", "Misc", "Test Case Title", "Case Event 20").attach("build.xml", "text/xml", "My Custom Build file!").attach(new File("test/fbapi4j.xml"));
 		session.scout(bug1);
