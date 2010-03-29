@@ -165,8 +165,18 @@ public class Case extends Entity {
 		return allowedOperations;
 	}
 
-	public void setAssignedTo(String person) {
-		fields.put(Fbapi4j.S_PERSON_ASSIGNED_TO, person);
+	public void setAssignedTo(String email) {
+		fields.put(Fbapi4j.S_PERSON_ASSIGNED_TO, email);
+		fields.remove(Fbapi4j.IX_PERSON_ASSIGNED_TO);
+	}
+
+	public void setAssignedTo(Person person) {
+		setAssignedTo(person.getId());
+	}
+
+	public void setAssignedTo(Integer personId) {
+		fields.put(Fbapi4j.IX_PERSON_ASSIGNED_TO, personId);
+		fields.remove(Fbapi4j.S_PERSON_ASSIGNED_TO);
 	}
 
 }
