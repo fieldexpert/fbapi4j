@@ -53,7 +53,7 @@ public final class Configuration {
 	}
 
 	/**
-	 * Use the properties specified a resource <tt>fb4api.properties</tt>.
+	 * Use the properties specified in the resource <tt>fb4api.properties</tt>.
 	 */
 	public Configuration configure() {
 		return configure("fbapi4j.properties");
