@@ -65,7 +65,9 @@ public class ConfigurationTest {
 	@Before
 	public void setup() throws Exception {
 		this.configuration = new Configuration();
+		configuration.setProperty("path", "api.asp?");
 		this.props = new Properties();
 		props.load(new FileReader("test/fbapi4j.properties"));
+		props.setProperty("path", "api.asp?");
 	}
 }
