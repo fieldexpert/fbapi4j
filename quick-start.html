@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>FogBugz API for Java (fbapi4j) - Quick Start Guide</title>
+	<link rel="stylesheet" href="styles/main.css" media="screen, projection" />
+</head>
+
+<body>
+
+  <div id="container">
+
+    <h1>
+    	<a href="index.html">fbapi4j</a>
+    	<span class="small">FogBugz API for Java</span>
+	</h1>
+
+    <div class="description">Quick Start Guide</div>
+
+    <p>
+    	This guide will demonstrate how to quickly get up and running with fbapi4j.  This guide assumes that you have
+    	already downloaded fbapij, and included the JAR file and dependencies on your classpath.
+    </p>
+    
+    
+    <h2>Configuring fbapi4j</h2>
+    <p>
+    	The easiest way to configure fbapi4j is to put a file at the root of your project named fbapi4j.properties.  This file should contain
+    	these properties:
+		
+<pre>endpoint=THE URL OF YOUR FOGBUGZ INSTALLATION
+email=THE EMAIL ADDRESS OF THE FOGBUGZ ACCOUNT TO SUBMIT BUGS ON BEHALF OF 
+password=THE PASSWORD FOR YOUR FOGBUGZ ACCOUNT</pre>
+    </p>
+
+	<p>
+		Example:
+<pre>
+endpoint=http://binarypizza.fogbugz.com
+email=michael@binarypizza.com
+password=mommasboy
+</pre>
+	</p>
+
+    <p>
+    	With that file created, you can then instantiate and load the configuration file like this:
+    </p>
+<pre>
+import com.fieldexpert.fbapi4j.Configuration;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration().configure();
+	}
+} 
+</pre>
+    
+	<p>
+		Alternatively, if you'd like to use a different properties file, you could load it like this:
+	</p>
+<pre>
+import com.fieldexpert.fbapi4j.Configuration;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration().configure("config/fb.properties");
+	}
+} 
+</pre>
+
+	<p>
+		Or, you could do without a properties file altogether, and specify your settings directly in Java:
+	</p>
+<pre>
+import com.fieldexpert.fbapi4j.Configuration;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration();
+		conf.setProperty("endpoint", "http://binarypizza.fogbugz.com");
+		conf.setProperty("email", "michael@binarypizza.com");
+		conf.setProperty("password", "mommasboy");
+	}
+} 
+</pre>
+
+
+	<h2>Submitting a Case</h2>
+	<p>
+		After loading the configuration, start a new FogBugz Session, and then submit a new case with that session.
+	</p>
+<pre>
+import com.fieldexpert.fbapi4j.Case;
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Session;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration().configure();
+		Session session = conf.buildSession();
+
+		String project = "Online Ordering";
+		String area = "Shopping Cart";
+		String title = "Problem with Pepperoni Toppings";
+		String description = "When customers add pepperoni as a topping " + 
+			"the system throws an IllegalToppingException.";
+
+		Case bug = new Case(project, area, title, description);		
+		
+		session.scout(bug);
+		session.close();
+	}
+} 
+</pre>
+	<p>
+		In the example above, <strong>session.scout(b)</strong> will submit the case to FogBugz.  If a matching case already exists,
+		the scout method will append to the existing case rather than build a new one.
+	</p>
+
+	<h2>Submitting a Case Programmatically</h2>
+	<p>
+		In the previous example, the bug description was hard-coded into the Java for demonstration purposes.  More realistically, you'll
+		probably want to generate your cases dynamically when exceptions occur in your code, like this: 
+	</p>
+<pre>
+package com.fieldexpert.fbapi4j.demo;
+
+import com.fieldexpert.fbapi4j.Case;
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.DefaultCaseBuilder;
+import com.fieldexpert.fbapi4j.Session;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+
+		Configuration conf = new Configuration().configure();
+		Session session = conf.buildSession();
+		String project = "Online Ordering";
+		String area = "Shopping Cart";
+		DefaultCaseBuilder caseBuilder = new DefaultCaseBuilder(project, area);
+		
+		try {
+			buildPizza();
+		} catch (Throwable e) {
+			Case bug = caseBuilder.build(e);
+			session.scout(bug);
+		}
+		
+		session.close();
+	}
+	
+	public static void buildPizza() {
+		// imagine code here
+		throw new RuntimeException("Sorry, we're out of pepperoni.");
+		// imagine code here
+	}
+}
+</pre>
+	<p>
+		In the above example, the DefaultCaseBuilder will automatically turn the exception into a FogBugz case.  The case will have a text attachment that contains the stacktrace.
+	</p>
+
+	
+	<h2>Attaching a File to a FogBugz Case</h2>
+	<p>
+		Files can easily be attached to cases like this: 
+	</p>
+<pre>
+Case bug = new Case(project, area, title, description).attach(new File("screenshot.png"));
+</pre>
+	<p>
+		...or like this:
+	</p>	
+<pre>
+Case bug = new Case(project, area, title, description);
+bug.attach("attachment.txt","text/plain","This is the contents of the attachment.");
+</pre>
+	<p>
+		...or like this:
+	</p>	
+<pre>
+Case bug = new Case(project, area, title, description);
+Attachment att = new Attachment("report.xls","application/vnd.ms-excel", new FileInputStream("report.xls"));
+bug.attach(att);
+</pre>
+	
+	<h2>Modifying an Existing FogBugz Case</h2>
+<pre>
+package com.fieldexpert.fbapi4j.demo;
+
+import java.io.File;
+import java.util.Date;
+
+import com.fieldexpert.fbapi4j.Case;
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Session;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration().configure();
+		Session session = conf.buildSession();
+
+		Case fbCase = session.get(Case.class, 1234);
+		fbCase.setDescription("Some new description");
+		fbCase.setTags("Tag 1", "Tag 3");
+		fbCase.setHoursEstimate(2);
+		fbCase.setPriority(7);
+		fbCase.setDueDate(new Date());
+		fbCase.setArea("Some Area");
+		fbCase.attach(new File("screenshot.jpg"));
+		fbCase.setAssignedTo("nathan@binarypizza.com");
+		
+		Case parent = session.get(Case.class, 1000);
+		fbCase.setParent(parent);
+		session.edit(fbCase);		
+		
+		session.close();
+	}
+}
+</pre>
+  
+  
+  <h2>Querying all FogBugz Users</h2>
+<pre>
+package com.fieldexpert.fbapi4j.demo;
+
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Person;
+import com.fieldexpert.fbapi4j.Session;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration().configure();
+		Session session = conf.buildSession();
+
+		for (Person p : session.findAll(Person.class)) {
+			System.out.println(p.getId() + " -> " + p.getFullname());
+		}
+
+		session.close();	
+	}
+}
+</pre>  
+
+	<h2>Querying a Specific FogBugz User</h2>
+<pre>
+package com.fieldexpert.fbapi4j.demo;
+
+import com.fieldexpert.fbapi4j.Configuration;
+import com.fieldexpert.fbapi4j.Person;
+import com.fieldexpert.fbapi4j.Session;
+
+public class QuickStartDemo {
+	public static void main(String[] args) {
+		Configuration conf = new Configuration().configure();
+		Session session = conf.buildSession();
+
+		// You can find somebody by their id:
+		int personId = 5;
+		Person person = session.get(Person.class, personId);
+		System.out.println(person.getFullname());
+
+		// Or you can find them by their email address:
+		person = session.get(Person.class, "joe@binarypizza.com");
+		System.out.println(person.getFullname());
+
+		session.close();	
+	}
+}
+</pre>
+  </div>
+</body>
+</html>
