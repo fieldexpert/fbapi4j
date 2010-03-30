@@ -28,25 +28,25 @@ public class DefaultCaseBuilder {
 		description.append(className + "\n");
 		description.append(fileName + ":" + lineNumber + "\n");
 		description.append("\n");
-		
+
 		StringWriter stackTraceWriter = new StringWriter();
 		PrintWriter pw = new PrintWriter(stackTraceWriter);
 		t.printStackTrace(pw);
-		
+
 		if (!attachStackTrace) {
 			description.append(stackTraceWriter.toString());
 		}
-		
+
 		Case fbCase = new Case(getProject(), getArea(), title, description.toString());
-		
+
 		if (attachStackTrace) {
-			Attachment attachment = new Attachment(exceptionName + ".txt","text/plain",stackTraceWriter.toString());
+			Attachment attachment = new Attachment(exceptionName + ".txt", "text/plain", stackTraceWriter.toString());
 			fbCase.attach(attachment);
 		}
-		
+
 		return fbCase;
 	}
-	
+
 	public Case build(Throwable t) {
 		return build(t, true);
 	}
@@ -67,7 +67,7 @@ public class DefaultCaseBuilder {
 		this.project = project;
 	}
 
-	private static Throwable getFirstCause(Throwable e) {
+	private Throwable getFirstCause(Throwable e) {
 		Throwable t = e;
 		while (t.getCause() != null) {
 			t = t.getCause();
