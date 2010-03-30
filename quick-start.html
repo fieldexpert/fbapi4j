@@ -1,51 +1,71 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+	This is a modification of the "deviation" theme, from 
+	Free CSS Templates at http://www.freecsstemplates.org
+	All HTML and CSS is Released for free under a Creative Commons Attribution 2.5 License
+	
+	Some of the images were kindly provided by GitHub.
+-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-	<title>FogBugz API for Java (fbapi4j) - Quick Start Guide</title>
+	<title>FogBugz API for Java - Quick Start Guide</title>
 	<link rel="stylesheet" href="styles/main.css" media="screen, projection" />
 </head>
 
 <body>
+	<div id="wrapper">
+	
+		<div id="header">
+		    <h1>
+		    	<a href="index.html">fbapi4j</a>
+		    	<span class="small">The FogBugz API for Java</span>
+			</h1>
+		</div>
+	
+		<div id="menu">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="download.html">Download</a></li>
+				<li class="current_page_item"><a href="quick-start.html">Quick Start Guide</a></li>
+				<li><a href="docs.html">Documentation</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</div>
 
-  <div id="container">
+		<div id="container">
+			<h2>Quick Start Guide</h2>
 
-    <h1>
-    	<a href="index.html">fbapi4j</a>
-    	<span class="small">FogBugz API for Java</span>
-	</h1>
-
-    <div class="description">Quick Start Guide</div>
-
-    <p>
-    	This guide will demonstrate how to quickly get up and running with fbapi4j.  This guide assumes that you have
-    	already downloaded fbapij, and included the JAR file and dependencies on your classpath.
-    </p>
-    
-    
-    <h2>Configuring fbapi4j</h2>
-    <p>
-    	The easiest way to configure fbapi4j is to put a file at the root of your project named fbapi4j.properties.  This file should contain
-    	these properties:
-		
+		    <p>
+		    	This guide will demonstrate how to quickly get up and running with fbapi4j.  This guide assumes that you have
+		    	already downloaded fbapij, and included the JAR file and dependencies on your classpath.  Of course, it also assumes
+		    	that you already have an active <a href="http://www.fogcreek.com/FogBugz/">FogBugz</a> account.
+		    </p>
+		    
+		    
+		    <h2>Configuring fbapi4j</h2>
+		    <p>
+		    	The easiest way to configure fbapi4j is to put a file at the root of your project named fbapi4j.properties.  This file should contain
+		    	these properties:
+    		</p>		
 <pre>endpoint=THE URL OF YOUR FOGBUGZ INSTALLATION
 email=THE EMAIL ADDRESS OF THE FOGBUGZ ACCOUNT TO SUBMIT BUGS ON BEHALF OF 
 password=THE PASSWORD FOR YOUR FOGBUGZ ACCOUNT</pre>
-    </p>
 
-	<p>
-		Example:
+
+			<p>
+				Example:
+			</p>
 <pre>
 endpoint=https://binarypizza.fogbugz.com
 email=michael@binarypizza.com
 password=mommasboy
 </pre>
-	</p>
 
-    <p>
-    	With that file created, you can then instantiate and load the configuration file like this:
-    </p>
+    		<p>
+    			With that file created, you can then instantiate and load the configuration file like this:    		
+    		</p>
 <pre>
 import com.fieldexpert.fbapi4j.Configuration;
 
@@ -55,10 +75,10 @@ public class QuickStartDemo {
 	}
 } 
 </pre>
-    
-	<p>
-		Alternatively, if you'd like to use a different properties file, you could load it like this:
-	</p>
+    		
+			<p>
+				Alternatively, if you'd like to use a different properties file, you could load it like this:
+			</p>
 <pre>
 import com.fieldexpert.fbapi4j.Configuration;
 
@@ -68,10 +88,9 @@ public class QuickStartDemo {
 	}
 } 
 </pre>
-
-	<p>
-		Or, you could do without a properties file altogether, and specify your settings directly in Java:
-	</p>
+			<p>
+				Or, you could do without a properties file altogether, and specify your settings directly in Java:
+			</p>
 <pre>
 import com.fieldexpert.fbapi4j.Configuration;
 
@@ -85,11 +104,10 @@ public class QuickStartDemo {
 } 
 </pre>
 
-
-	<h2>Submitting a Case</h2>
-	<p>
-		After loading the configuration, start a new FogBugz Session, and then submit a new case with that session.
-	</p>
+			<h2>Submitting a Case</h2>
+			<p>
+				After loading the configuration, start a new FogBugz Session, and then submit a new case with that session.
+			</p>
 <pre>
 import com.fieldexpert.fbapi4j.Case;
 import com.fieldexpert.fbapi4j.Configuration;
@@ -113,16 +131,16 @@ public class QuickStartDemo {
 	}
 } 
 </pre>
-	<p>
-		In the example above, <strong>session.scout(b)</strong> will submit the case to FogBugz.  If a matching case already exists,
-		the scout method will append to the existing case rather than build a new one.
-	</p>
+			<p>
+				In the example above, <strong>session.scout(bug)</strong> will submit the case to FogBugz.  If a matching case already exists,
+				the scout method will append to the existing case rather than build a new one.
+			</p>
 
-	<h2>Submitting a Case Programmatically</h2>
-	<p>
-		In the previous example, the bug description was hard-coded into the Java for demonstration purposes.  More realistically, you'll
-		probably want to generate your cases dynamically when exceptions occur in your code, like this: 
-	</p>
+			<h2>Submitting a Case Programmatically</h2>
+			<p>
+				In the previous example, the bug description was hard-coded into the Java for demonstration purposes.  More realistically, you'll
+				probably want to generate your cases dynamically when exceptions occur in your code, like this: 
+			</p>
 <pre>
 package com.fieldexpert.fbapi4j.demo;
 
@@ -145,9 +163,9 @@ public class QuickStartDemo {
 		} catch (Throwable e) {
 			Case bug = caseBuilder.build(e);
 			session.scout(bug);
+		} finally {
+			session.close();
 		}
-		
-		session.close();
 	}
 	
 	public static void buildPizza() {
@@ -157,35 +175,37 @@ public class QuickStartDemo {
 	}
 }
 </pre>
-	<p>
-		In the above example, the DefaultCaseBuilder will automatically turn the exception into a FogBugz case.  The case will have a text attachment that contains the stacktrace.
-	</p>
-
+			<p>
+				In the above example, the DefaultCaseBuilder will automatically turn the exception into a FogBugz case.  The case will have a text attachment that contains the stacktrace.
+			</p>
 	
-	<h2>Attaching a File to a FogBugz Case</h2>
-	<p>
-		Files can easily be attached to cases like this: 
-	</p>
+			<h2>Attaching a File to a FogBugz Case</h2>
+			<p>
+				Let's imagine you have a file named "screenshot.png" located in a subdirectory named "images".  You could attach it to a new case like this:
+			</p>
 <pre>
-Case bug = new Case(project, area, title, description).attach(new File("screenshot.png"));
+Case bug = new Case(project, area, title, description).attach(new File("images/screenshot.png"));
 </pre>
-	<p>
-		...or like this:
-	</p>	
-<pre>
-Case bug = new Case(project, area, title, description);
-bug.attach("attachment.txt","text/plain","This is the contents of the attachment.");
-</pre>
-	<p>
-		...or like this:
-	</p>	
+
+			<p>
+				Here's another way of doing the same thing.  This time we'll attach an excel spreadsheet, located in the current directory:
+			</p>	
 <pre>
 Case bug = new Case(project, area, title, description);
 Attachment att = new Attachment("report.xls","application/vnd.ms-excel", new FileInputStream("report.xls"));
 bug.attach(att);
 </pre>
+
+			<p>
+				Or, if you'd like to attach a file that doesn't actually exist on the local filesystem, you can do that like this: 
+			</p>
+<pre>
+Case bug = new Case(project, area, title, description);
+bug.attach("attachment.txt","text/plain","This is the contents of a non-existent local file.");
+</pre>
+
 	
-	<h2>Modifying an Existing FogBugz Case</h2>
+			<h2>Modifying an Existing FogBugz Case</h2>
 <pre>
 package com.fieldexpert.fbapi4j.demo;
 
@@ -221,7 +241,7 @@ public class QuickStartDemo {
 </pre>
   
   
-  <h2>Querying all FogBugz Users</h2>
+		<h2>Querying all FogBugz Users</h2>
 <pre>
 package com.fieldexpert.fbapi4j.demo;
 
@@ -243,7 +263,7 @@ public class QuickStartDemo {
 }
 </pre>  
 
-	<h2>Querying a Specific FogBugz User</h2>
+		<h2>Querying a Specific FogBugz User</h2>
 <pre>
 package com.fieldexpert.fbapi4j.demo;
 
@@ -269,6 +289,13 @@ public class QuickStartDemo {
 	}
 }
 </pre>
-  </div>
+		</div>
+		
+		<div id="footer">
+			<p>
+				Visit our <a href="http://github.com/fieldexpert/fbapi4j">GitHub Project Page</a>
+			</p>
+		</div>
+	</div>
 </body>
 </html>

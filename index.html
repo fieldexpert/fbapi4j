@@ -1,118 +1,110 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+	This is a modification of the "deviation" theme, from 
+	Free CSS Templates at http://www.freecsstemplates.org
+	All HTML and CSS is Released for free under a Creative Commons Attribution 2.5 License
+	
+	Some of the images were kindly provided by GitHub.
+-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-	<title>FogBugz API for Java (fbapi4j) @ GitHub</title>
+	<title>FogBugz API for Java - fbapi4j</title>
 	<link rel="stylesheet" href="styles/main.css" media="screen, projection" />
 </head>
 
 <body>
-  <a href="http://github.com/fieldexpert/fbapi4j"><img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+	<div id="wrapper">
+	
+		<div id="header">
+		    <h1>
+		    	<a href="index.html">fbapi4j</a>
+		    	<span class="small">The FogBugz API for Java</span>
+			</h1>
+		</div>
+	
+		<div id="menu">
+			<ul>
+				<li class="current_page_item"><a href="index.html">Home</a></li>
+				<li><a href="download.html">Download</a></li>
+				<li><a href="quick-start.html">Quick Start Guide</a></li>
+				<li><a href="docs.html">Documentation</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</div>
 
-  <div id="container">
+		<div id="container">
+			<h2>What is fbapi4j?</h2>
+		    <p>
+		    	The FogBugz API for Java is an open source library that allows Java developers to easily write applications that interact
+		    	with the <a href="http://support.fogcreek.com/help/topics/advanced/API.html">FogBugz XML API</a>.  Its primary purpose is to allow Java developers to programmatically file bugs with <a href="http://www.fogcreek.com/FogBugz/">FogBugz</a>
+		    	when their software crashes.
+		    </p>
+		    
+		    <h2>How Do I Use fbapi4j?</h2>
+		    <p>
+		    	Please refer to the <a href="quick-start.html">quick start guide</a>.
+		    </p>
+		    
+		    <h2>Does fbapi4j Use BugzScout?</h2>
+		    <p>
+		    	No. fbapi4j connects to FogBugz via the <a href="http://support.fogcreek.com/help/topics/advanced/API.html">FogBugz XML API</a>. 
+		    	<a href="http://www.fogcreek.com/FogBUGZ/docs/40/Articles/BugzScout.html">BugzScout</a> was the original API for programmatically submitting cases to FogBugz.  Although BugzScout still works (at the time of writing),
+		    	it has largely been made obsolete by the XML API, which is more powerful.  (For example, the XML API allows you to attach files to cases, which BugzScout did not.)
+		    </p>
 
-    <div class="download">
-      <a href="http://github.com/fieldexpert/fbapi4j/zipball/master"><img border="0" width="90" src="images/zip.png" /></a>
-      <a href="http://github.com/fieldexpert/fbapi4j/tarball/master"><img border="0" width="90" src="images/tar.png" /></a>
-    </div>
+			<h2>Who Develops and Maintains This?</h2>
+			<p>
+				fbapi4j was developed by <a href="http://github.com/nathanbowser">Nathan Bowser</a>, <a href="http://github.com/joegallo">Joe Gallo</a>, and <a href="http://www.michaelrighi.com">Michael Righi</a> with
+				<a href="http://www.fieldexpert.com">Field Expert, Inc.</a>  New contributors are welcome to join the effort, so please <a href="contact.html">contact us</a> if you are interested.
+			</p>
+		    		       
+		    <h2>Are you Affiliated with Fog Creek Software?</h2>
+		    <p>
+		    	No, we are not affiliated with <a href="http://www.fogcreek.com/">Fog Creek Software</a>, other than being happy customers of their <a href="http://www.fogcreek.com/FogBugz/">excellent bug tracking and project management tool</a>. 
+		    </p>
+		    		
+		    <h2>What License is this Code Available Under?</h2>
+		    <p>
+		    	fbapi4j is available under the <a href="http://en.wikipedia.org/wiki/MIT_License">MIT X-11 License</a>.  Here, show this to your barrister:
+<pre>
+Copyright (c) 2010 Field Expert, Inc.
 
-    <h1>
-    	<a href="index.html">fbapi4j</a>
-    	<span class="small">FogBugz API for Java</span>
-	</h1>
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
 
-	<h2>What is fbapi4j?</h2>
-    <p>
-    	The FogBugz API for Java is an open source library that allows Java developers to easily write applications that interact
-    	with the <a href="http://support.fogcreek.com/help/topics/advanced/API.html">FogBugz XML API</a>.  Its primary purpose is to allow Java developers to programmatically file bugs with FogBugz
-    	when their software crashes.
-    </p>
-    
-    <h2>How Do I Use fbapi4j?</h2>
-    <p>
-    	Please refer to the <a href="quick-start.html">quick start guide</a>.
-    </p>
-    
-    <h2>Why use fbapi4j instead of BugzScout?</h2>
-    <p>
-    	<a href="http://www.fogcreek.com/FogBUGZ/docs/40/Articles/BugzScout.html">BugzScout</a> was the original API for programatically submitting cases to FogBugz.  Although it's still supported by FogBugz, BugzScout has since
-    	been made obsolete by FogBugz's XML API, which is much more powerful.  (For example, the XML API allows you to attach files to cases, which BugzScout did not.)  The purpose of fbapi4j is to simplify the process of
-    	interacting with the FogBugz XML API. 
-    </p>
-    
-	<h2>Download</h2>
-    <p>
-      	You can download this project in either
-      	<a href="http://github.com/fieldexpert/fbapi4j/zipball/master">zip</a> or
-      	<a href="http://github.com/fieldexpert/fbapi4j/tarball/master">tar</a> formats.
-    </p>
-        	
-    <p>
-    	You can also clone the project with <a href="http://git-scm.com">Git</a> by running:
-    	<pre>$ git clone git://github.com/fieldexpert/fbapi4j</pre>
-    </p>
-       
-    <h2>Are you Affiliated with Fog Creek Software?</h2>
-    <p>
-    	No, we are not affiliated with <a href="http://www.fogcreek.com/">Fog Creek Software</a>, other than being a customer of their <a href="http://www.fogcreek.com/FogBugz/">excellent bug tracking and project management tool</a>. 
-    </p>
-    
-	<h2>Authors</h2>
-	<p>
-		<a href="http://github.com/nathanbowser">Nathan Bowser</a>
-		<br />
-		<a href="http://github.com/joegallo">Joe Gallo</a>
-		<br />
-		<a href="http://www.michaelrighi.com">Michael Righi</a>
-	</p>
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-    <h2>Release History</h2>
-    <p>
-    	<ul>
-    		<li><strong>March 30, 2010: 0.5 beta</strong></li>
-    	</ul>
-    </p>
-
-
-    <h2>License</h2>
-	<p>
-		Copyright (c) 2010 Field Expert, Inc.
-	</p>
-	<p>
-		Permission is hereby granted, free of charge, to any person
-		obtaining a copy of this software and associated documentation
-		files (the "Software"), to deal in the Software without
-		restriction, including without limitation the rights to use,
- 		copy, modify, merge, publish, distribute, sublicense, and/or sell
- 		copies of the Software, and to permit persons to whom the
- 		Software is furnished to do so, subject to the following
- 		conditions:
- 	</p>
- 	<p>
-		The above copyright notice and this permission notice shall be
- 		included in all copies or substantial portions of the Software.
-	</p>
-	<p>
-		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-		EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-		OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-		NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-		HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-		WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-		FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-		OTHER DEALINGS IN THE SOFTWARE.
-	</p>
-
-	<h2>Contact</h2>
-	<p>Michael Righi (michael dot righi at field expert dot com)</p>
-
-    
-
-    <div class="footer">
-      Get the source code on GitHub : <a href="http://github.com/fieldexpert/fbapi4j">http://github.com/fieldexpert/fbapi4j</a>
-    </div>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+</pre>
+			</p>
+		
+			<h2>I Think I Found a Bug in fbapi4j.  How Should I Notify You of the Problem?</h2>
+			<p>
+				To track bugs with the FogBugz API for Java, we use JIRA.  Just kidding.  We use FogBugz.  Please submit the bug on our <a href="contact.html#submitbug">bug submission page</a>.
+			</p>
+  		</div>
+  		
+		<div id="footer">
+			<p>
+				Visit our <a href="http://github.com/fieldexpert/fbapi4j">GitHub Project Page</a>
+			</p>
+		</div>
   </div>
-  
 </body>
 </html>

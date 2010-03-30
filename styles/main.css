@@ -1,15 +1,195 @@
+/*
+	This is a modification of the "deviation" theme, from 
+	Free CSS Templates at http://www.freecsstemplates.org
+	All HTML and CSS is Released for free under a Creative Commons Attribution 2.5 License
+	
+	Some of the images were kindly provided by GitHub.
+*/
+
 body {
-	margin-top: 1.0em;
-	background-color: #dbf5df;
-	font-family: "Helvetica,Arial,FreeSans";
-	color: #000000;
+	margin: 0;
+	padding: 0;
+	background: #FFFDEA;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #464032;
 }
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+	padding: 0;
+}
+
 
 #container {
 	margin: 0 auto;
-	width: 900px;
+	width: 940px;
 }
-		
+
+
+
+/* Header */
+
+#header {
+	width: 940px;
+	height: 70px;
+	margin: 0 auto;
+}
+
+#header h1 {
+	font-size: 3.8em; 
+	color: #5E4E38;
+}
+
+#header a {
+	color: #A83A01;	
+	text-decoration: none;
+}
+
+#header .small { 
+	font-size: 0.4em;
+}
+
+/* Footer */
+
+#footer {
+	width: 940px;
+	height: 50px;
+	margin: 0 auto;
+	padding: 0px 0 15px 0;
+	border-top: 4px solid #EBE6D1;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#footer p {
+	margin: 0;
+	padding-top: 20px;
+	line-height: normal;
+	font-size: 11px;
+	text-align: center;
+	color: #444444;
+}
+
+#footer a {
+	color: #464032;
+}
+
+
+
+/* Menu */
+#menu {
+	width: 940px;
+	height: 36px;
+	margin: 0 auto;
+	padding: 0;
+	background: url(../images/menu_bg.jpg) no-repeat left top;
+}
+
+#menu ul {
+	margin: 0px 0px 0px 10px;
+	padding: 0;
+	list-style: none;
+	line-height: normal;
+}
+
+#menu li {
+	float: left;
+}
+
+#menu a {
+	display: block;
+	height: 26px;
+	margin-bottom: 10px;
+	padding: 10px 20px 0px 20px;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+	border: none;
+}
+
+#menu a:hover, #menu .current_page_item a {
+	background: #E0D3B3;
+	text-decoration: none;
+}
+
+#menu .current_page_item a {
+	background: #E0D3B3;
+	color: #2A1F0B;
+}
+
+
+/* Misc. */
+
+h2 {
+	font-size: 1.5em;
+	color: #5E4E38; 
+}
+
+
+pre {
+	background: #000;
+	color: #fff;
+	padding: 15px;
+}
+
+#container p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	padding-bottom: 12px;
+	line-height: 140%;
+}
+
+/* File Table */
+
+#browser table {
+	border-left:1px solid #D8D8D8;
+	border-right:1px solid #D8D8D8;
+	border-top:1px solid #D8D8D8;
+	font-family:Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+	font-size:90%;
+	width:100%;
+}
+
+#browser table th {
+	background-color:#EAEAEA;
+	border-bottom:1px solid #D8D8D8;
+	color:#5E4E38;
+	font-weight: normal;
+	padding:0.5em 0.3em;
+	text-align:left;
+}
+
+#browser table .history {
+	float:right;
+	padding-right:5px;
+}
+
+#browser table td {
+	background:url("../images/row_bg.png") repeat-x scroll 0 100% #F8F8F8;
+	border-bottom:1px solid #E1E1E1;
+	color:#5E4E38;
+	padding:0.5em 0.3em;
+}
+
+#browser table td.icon {
+	width:1.3em;
+}
+
+#browser table td a.message {
+	color:#484848;
+}
+
+#browser table td span.ref {
+	color:#AAAAAA;
+}
+
+
+/*		
 h1 { 
 	font-size: 3.8em; 
 	color: #240a20; margin-bottom: 3px; 
@@ -23,10 +203,6 @@ h1 a {
 	text-decoration: none;
 }
 
-h2 {
-	font-size: 1.5em;
-	color: #240a20; 
-}
 
 h3 { 
 	text-align: center;
@@ -44,24 +220,10 @@ a {
 	font-style: italic;
 }
 
-.download {
-	float: right;
-}
-
-pre {
-	background: #000;
-	color: #fff;
-	padding: 15px;
-}
-
 hr {
 	border: 0; 
 	width: 80%; 
 	border-bottom: 1px solid #aaa;
 }
 
-.footer {
-	text-align:center;
-	padding-top:30px;
-	font-style: italic;
-}
+*/
