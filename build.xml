@@ -1,6 +1,6 @@
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="fbapi4j" default="default">
 
-	<property name="version" value="1.0" />
+	<property name="version" value="0.5" />
 
 	<property name="src.dir" location="${basedir}/src" />
 	<property name="test.src.dir" location="${basedir}/test" />
@@ -228,7 +228,7 @@
 	<target name="dist-jar" depends="build" description="Build a distributable jar file">
 		<taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="lib/jarjar-1.0.jar" />
 
-		<jarjar jarfile="${dist.dir}/${ant.project.name}.jar">
+		<jarjar jarfile="${dist.dir}/${ant.project.name}-${version}.jar">
 			<fileset dir="${classes.dir}" />
 			<zipfileset src="${lib.dir}/mime-util-2.1.jar" />
 			<zipfileset src="${lib.dir}/slf4j-api-1.5.10.jar" />
@@ -236,6 +236,11 @@
 			<rule pattern="org.slf4j.**" result="com.fieldexpert.fbapi4j.slf4j.@1" />
 			<rule pattern="eu.medsea.**" result="com.fieldexpert.fbapi4j.@1" />
 		</jarjar>
+
+		<jar jarfile="${dist.dir}/${ant.project.name}-nodep-${version}.jar">
+			<fileset dir="${classes.dir}" />
+		</jar>
+
 	</target>
 
 	<!-- ================================= 
