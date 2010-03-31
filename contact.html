@@ -10,6 +10,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
+	<style type="text/css">
+		label { float:left; font-weight: bold; text-align: right; }
+		input, textarea { width: 500px; }
+		select{ width: 504px; }
+		div#buttons { padding-left: 250px; }
+		#Button_OKEdit, #Button_CancelEdit { width: 100px; }
+	</style>
+
 	<title>FogBugz API for Java - Contact</title>
 	<link rel="stylesheet" href="styles/main.css" media="screen, projection" />
 </head>
@@ -38,13 +46,111 @@
 			<h2>Contact Us</h2>
 		    
 		    <p>
-		    	This is a placeholder for a contact form that we <em>totally</em> plan on building in the next week or two.  We just
-		    	launched this project on March 30, 2010, so please check back in a week or two.
-		    </p>
+		    	We'd love to hear your feedback on fbapi4j!
+		    </p> 
+		    
+	        <form action="https://fieldexpert.fogbugz.com/default.asp?pre=preSubmitBug" method="post" enctype="multipart/form-data" name="contactForm" style="display: inline;">
+	            <input type="hidden" name="command" value="new" />
+	            <input type="hidden" name="fPublic" value="1" />
+	            <input type="hidden" name="ixProject" value="18" />
+	            <input type="hidden" name="ixArea" value="55" />
+	            <table>
+	            	<col width="25%"/>
+	            	<col width="75%"/>
+	            	<tr>
+	            		<th><label for="sTitle">Subject:</label></th>
+	            		<td>
+	            			<input type="text" maxlength="128" name="sTitle" id="sTitle" value="" />
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th><label for="sCustomerEmail">Your Email:</label></th>
+	            		<td>
+	            			<input type="text" maxlength="80" name="sCustomerEmail" id="sCustomerEmail" value="" />		
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th valign="top"><label for="sEvent">Your Message:</label></th>
+	            		<td>
+	            			<textarea name="sEvent" id="sEvent" rows="8" cols="55"></textarea>
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th></th>
+	            		<td>
+				            <input type="submit" id="Button_OKEdit" name="OK" value="OK" />
+	            		</td>
+	            	</tr>
+	            </table>	            
+	        </form>
+		    <br />
+		    
+		    
+		    		    	
+		    
+		    <a name="submitbug" />
+		    <h2>Submit a Bug or Feature Request</h2>
 		    
 		    <p>
-		    	Until then, if you'd like to contact us, please send an email to [michael] [dot] [righi] [at] [fieldexpert] [dot] [com].
+		    	To track bugs with the FogBugz API for Java, we use JIRA.  Just kidding.  We use FogBugz.  If you think you found a problem, please fill out the form below to create a new FogBugz case and we'll look into it as soon as we can.	You can
+		    	also suggest feature requests through this form.	    
 		    </p>
+		    
+	        <form action="https://fieldexpert.fogbugz.com/default.asp?pre=preSubmitBug" method="post" enctype="multipart/form-data" name="formWithProject" style="display: inline;">
+	            <input type="hidden" name="command" value="new" />
+	            <input type="hidden" name="fPublic" value="1" />
+	            <input type="hidden" name="ixProject" value="18" />
+	            <input type="hidden" name="ixArea" value="55" />
+	           
+	            <table>
+	            	<col width="25%"/>
+	            	<col width="75%"/>
+	            	<tr>
+	            		<th><label for="sTitle">Bug/Feature Request Title:</label></th>
+	            		<td>
+	            			<input type="text" maxlength="128" name="sTitle" id="sTitle" value="" />
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th><label for="sCustomerEmail">Your Email:</label></th>
+	            		<td>
+	            			<input type="text" maxlength="80" name="sCustomerEmail" id="sCustomerEmail" value="" />		
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th><label for="sVersion">fbapi4j Version:</label></th>
+	            		<td>
+	            			<select name="sVersion" id="sVersion">
+	            				<option value="0.5-beta">0.5-beta</option>
+	            			</select>
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th><label for="sComputer">OS/Java Version:</label></th>
+	            		<td>
+	            			<input type="text" maxlength="80" name="sComputer" id="sComputer" value="" />		
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th valign="top"><label for="sEvent">Description:</label></th>
+	            		<td>
+	            			<textarea name="sEvent" id="sEvent" rows="8" cols="55"></textarea>
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th><label for="File1">Attach a File:</label></th>
+	            		<td>
+							<input type="file" name="File1" id="File1" />	            		
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th></th>
+	            		<td>
+				            <input type="submit" id="Button_OKEdit" name="OK" value="OK" />
+	            		</td>
+	            	</tr>
+	            </table>	            
+	        </form>
 		    			
   		</div>
   		
