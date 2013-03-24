@@ -178,5 +178,33 @@ public class Case extends Entity {
 		fields.put(Fbapi4j.IX_PERSON_ASSIGNED_TO, personId);
 		fields.remove(Fbapi4j.S_PERSON_ASSIGNED_TO);
 	}
+	
+	/***
+	 * A general-purpose getter for any field. Particularly useful for obtaining
+	 * fields set up as custom in the {@link CaseHandler}. This is typically used
+	 * for those fields belonging to third-party plugins.
+	 * 
+	 * @throws IllegalArgumentException If the column specified does not exist
+	 */
+	public Object getField(String fieldName) throws IllegalArgumentException {
+		Object value = null;
+		
+		if (fields.containsKey(fieldName)) {
+			value = fields.get(fieldName);
+		} else {
+			throw new IllegalArgumentException(String.format("Unknown field specified '%s'", fieldName));
+		}
+		
+		return value;
+	}
+
+	/***
+	 * A general-purpose setter for any field. Particularly useful for obtaining
+	 * fields set up as custom in the {@link CaseHandler}. This is typically used
+	 * for those fields belonging to third-party plugins.
+	 */
+	public void setField(String fieldName, Object fieldValue) {
+		fields.put(fieldName, fieldValue);
+	}
 
 }

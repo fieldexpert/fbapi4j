@@ -31,7 +31,7 @@ class ConnectedSession implements Session {
 
 	private void initHandlers() {
 		handlers.put(Area.class, areaHandler = new AreaHandler(dispatch, util, token));
-		handlers.put(Case.class, caseHandler = new CaseHandler(dispatch, util, token));
+		handlers.put(Case.class, caseHandler = new CaseHandler(dispatch, util, token, dispatch.getProperties()));
 		handlers.put(Person.class, new PersonHandler(dispatch, util, token));
 		handlers.put(Priority.class, new PriorityHandler(dispatch, util, token));
 		handlers.put(Project.class, new ProjectHandler(dispatch, util, token));

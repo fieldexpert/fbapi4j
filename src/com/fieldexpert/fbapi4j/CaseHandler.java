@@ -5,10 +5,13 @@ import static java.util.Arrays.asList;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.w3c.dom.Document;
@@ -26,10 +29,46 @@ import com.fieldexpert.fbapi4j.dispatch.Response;
 
 class CaseHandler extends AbstractHandler<Case> {
 
-	private static final String cols = collectionToCommaDelimitedString(asList(Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS));
+	/** The complete set of supported columns, i.e. the contents of {@link #DEFAULT_COLUMNS} merged with the custom columns from {@link #PROP_COLUMNS} */
+	private Set<String> supportedColumns;
+	/** A string representation of {@link #supportedColumns}, which can be used for encoded queries against FogBugz */
+	private String supportedColumnsCSV;
+	
+	/** A set containing {@link #DEFAULT_COLUMNS} */
+	private Set<String> defaultColumns;
+	
+	/** The default columns to request for each case - regardless of custom configuration */
+	static final String[] DEFAULT_COLUMNS = {Fbapi4j.S_PROJECT, Fbapi4j.S_AREA, Fbapi4j.S_SCOUT_DESCRIPTION, Fbapi4j.S_TITLE, Fbapi4j.S_EVENT, Fbapi4j.EVENTS};
+	
+	/** The property used to list a CSV of additional columns to support */
+	static final String PROP_COLUMNS = "case.columns";
+	/** The delimiter of the CSV property as per {@link #PROP_COLUMNS} */
+	static final String FIELD_CSV_DELIM = ",";
 
-	CaseHandler(Dispatch dispatch, Util util, String token) {
+	CaseHandler(Dispatch dispatch, Util util, String token, Properties properties) {
 		super(dispatch, util, token);
+		configureColumns(properties);
+	}
+
+	/***
+	 * Configure additional columns to be made available.
+	 * @param properties Application configuration
+	 */
+	private void configureColumns(Properties properties) {
+		supportedColumns = new HashSet<String>();
+		defaultColumns = new HashSet<String>();
+		// Add those supported by default - i.e. core fogbugz fields
+		defaultColumns.addAll(asList(DEFAULT_COLUMNS));
+		supportedColumns.addAll(defaultColumns);
+		
+		if (properties.containsKey(PROP_COLUMNS)) {
+			String[] configuredColumns = properties.getProperty(PROP_COLUMNS).split(FIELD_CSV_DELIM);
+			for (String currentColumn : configuredColumns) {
+				supportedColumns.add(currentColumn);
+			}
+		}
+		
+		supportedColumnsCSV = collectionToCommaDelimitedString(supportedColumns);
 	}
 
 	private void allowed(Case c, AllowedOperation operation) {
@@ -42,6 +81,15 @@ class CaseHandler extends AbstractHandler<Case> {
 	Case build(Map<String, String> data, Document doc) {
 		Case c = new Case(Integer.parseInt(data.get(Fbapi4j.IX_BUG)), data.get(Fbapi4j.S_PROJECT), data.get(Fbapi4j.S_AREA), //
 				data.get(Fbapi4j.S_TITLE), data.get(Fbapi4j.S_SCOUT_DESCRIPTION));
+		
+		// Add allthe supported columns to the case
+		for (String currentColumn : supportedColumns) {
+			// We assume the default columns are handled elsewhere
+			if (! defaultColumns.contains(supportedColumns)) {
+				c.setField(currentColumn, data.get(currentColumn));
+			}
+		}
+		
 		List<Event> events = events(doc, c);
 		c.addEvents(events);
 		update(c, data);
@@ -96,7 +144,7 @@ class CaseHandler extends AbstractHandler<Case> {
 	}
 
 	public Case findById(Integer id) {
-		return find(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, cols)));
+		return find(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.QUERY, id, Fbapi4j.COLS, supportedColumnsCSV)));
 	}
 
 	public Case findByName(String name) {
@@ -105,7 +153,7 @@ class CaseHandler extends AbstractHandler<Case> {
 
 	public List<Case> query(String... criterion) {
 		String q = collectionToCommaDelimitedString(asList(criterion));
-		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.COLS, cols, Fbapi4j.QUERY, q)));
+		Response resp = dispatch.invoke(new Request(Fbapi4j.SEARCH, util.map(Fbapi4j.TOKEN, token, Fbapi4j.COLS, supportedColumnsCSV, Fbapi4j.QUERY, q)));
 		return list(resp);
 	}
 
@@ -161,5 +209,13 @@ class CaseHandler extends AbstractHandler<Case> {
 			operations.add(AllowedOperation.valueOf(op.toUpperCase()));
 		}
 		c.setAllowedOperations(operations);
+	}
+	
+	/***
+	 * A ready-only copy of the set of columns supported.
+	 * @return Read-only collection of columns
+	 */
+	protected Collection<String> getSupportedColumns() {
+		return Collections.unmodifiableCollection(supportedColumns);
 	}
 }
